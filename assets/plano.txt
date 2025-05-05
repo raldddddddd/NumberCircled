@@ -1,0 +1,25 @@
+User
+-Add, edit, delete own reviews
+-Review must have: Name, Review text, rate product, ASAR(Positive, Negative, Neutral)
+-Filter review
+
+Super-Admin
+-Add, edit, update user and admin
+-Add, edit, update product
+-Chart.js
+-Filter and search review
+-Export
+
+Admin
+-No add and edit admin
+
+
+    <!--
+    <?php
+    require_once("../model/Users.php");
+    $user = new Users(); 
+    $students = $user->getAll();
+    foreach ($students as $student): ?>
+            <li><?php echo $student['name']; ?></li>
+    <?php endforeach; ?>
+    -->

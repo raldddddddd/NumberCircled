@@ -1,0 +1,97 @@
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    role_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    profile_image LONGBLOB,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE genres (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE movies (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    release_date DATE NOT NULL,
+    image_url VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE movie_genres (
+    movie_id INT NOT NULL,
+    genre_id INT NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(id)
+);
+
+CREATE TABLE movie_review_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    movie_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    rating DECIMAL(2,1) NOT NULL CHECK (rating IN (1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0)),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE movie_review_sentiments (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    movie_review_comment_id INT NOT NULL,
+    positive_score DECIMAL(5,4) NOT NULL,
+    negative_score DECIMAL(5,4) NOT NULL,
+    sentiment_category VARCHAR(50) NOT NULL,
+    FOREIGN KEY (movie_review_comment_id) REFERENCES movie_review_comments(id)
+);
+
+
+CREATE TABLE activity_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    login_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+
+
+INSERT INTO roles (role) VALUES 
+('super_admin'), 
+('admin'), 
+('user')
+
+INSERT INTO users(role_id, first_name, last_name, email, password) VALUES 
+(1, 'Adrian', 'Sido', 'adrian@gmail.com', 'adrian'),
+(2, 'Gerald', 'Santiago', 'gerald@gmail.com', 'gerald'),
+(3, 'Gio', 'Ferreras', 'gio@gmail.com', 'gio')
+
+INSERT INTO movies (name, description, release_date, image_url) VALUES
+('John Weak', 'Dog revenger pew pew', '2020-04-11','johnweak.com'),
+('Narnia', 'Western Isekai', '2004-08-12','narnia.com'),
+('Classroom Of The Elite', 'Peak Anime', '2010-11-20','cote.com')
+
+INSERT INTO genres (name, description) VALUES
+('Fantasy', 'D&D stuff'),
+('Action', 'Pow pow Beng Beng')
+
+INSERT INTO movie_genres (movie_id, genre_id) VALUES
+(1, 2),
+(2, 1),
+(3, 2)
+
+INSERT INTO movie_review_comments (movie_id, user_id, comment, rating) VALUES
+(1, 2, 'The movie is good.', 4.0),
+(3, 3, 'Peak ayanokoji', 5.0)
+
