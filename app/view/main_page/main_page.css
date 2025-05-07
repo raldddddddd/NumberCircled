@@ -1,0 +1,151 @@
+/* General Reset */
+body {
+  background-color: #14181c;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+.custom-bg {
+  background-color: #14181c !important;
+}
+
+
+/* Hero Section */
+.hero-section {
+  background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/b3c40a78219513.5cc812e957de6.jpg') center center / cover no-repeat;
+  height: 80vh;
+  padding-top: 100px; 
+  background-position: 50% 20%; 
+  background-size:cover; 
+}
+
+.hero-description {
+  max-width: 500px;
+}
+
+.navbar {
+  padding: 10px 20px;
+}
+
+.custom-navbar {
+  background-color: transparent;
+  backdrop-filter: blur(4px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; 
+}
+
+.search-container {
+  position: relative;
+  width: 50%;
+}
+
+.search-input {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 8px 15px;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 9px;
+  color: #888;
+}
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  color: white;
+}
+
+/*Chevron buttons*/
+.btn-chevron-next {
+  background-color: #14181c;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-chevron-next i {
+  margin-left: 10px;
+}
+
+.btn-chevron-next:hover {
+  background-color: #222;
+}
+
+
+/* Movie Posters */
+.movie-card {
+  width: 100%;
+  padding-left: -50px;
+  padding-right: -50px;
+  max-width: 260px;
+  margin: auto;
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 12px;
+  transition: transform 0.3s;
+}
+
+.movie-poster:hover {
+  transform: scale(1.05);
+}
+
+.rating-row {
+  color: white;
+  font-size: 1rem;
+}
+
+.genre-tag {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+
+
+
+/* Section Styling */
+.featured-section {
+  padding: 60px 0;
+}
+
+/* Footer */
+.custom-footer {
+  background-color: #14181c;
+  color: #e0e0e0;
+}
+
+.custom-footer .footer-link {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.custom-footer .footer-link:hover {
+  text-decoration: underline;
+}
