@@ -17,8 +17,7 @@ CREATE TABLE users (
 
 CREATE TABLE genres (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE movies (
@@ -26,7 +25,8 @@ CREATE TABLE movies (
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     release_date DATE NOT NULL,
-    image_url VARCHAR(255) NOT NULL
+    image_url VARCHAR(255) NOT NULL,
+    last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE movie_genres (
@@ -36,26 +36,28 @@ CREATE TABLE movie_genres (
     FOREIGN KEY (genre_id) REFERENCES genres(id)
 );
 
-CREATE TABLE movie_review_comments (
+CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     movie_id INT NOT NULL,
     user_id INT NOT NULL,
     comment TEXT NOT NULL,
-    rating DECIMAL(2,1) NOT NULL CHECK (rating IN (1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0)),
+    rating DECIMAL(2,1) NOT NULL CHECK (rating IN (1.0, 2.0, 3.0, 4.0, 5.0)),
+    positive_score DECIMAL(5,4) NOT NULL,
+    negative_score DECIMAL(5,4) NOT NULL,
+    sentiment_category VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE movie_review_sentiments (
+CREATE TABLE word_frequencies (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    movie_review_comment_id INT NOT NULL,
-    positive_score DECIMAL(5,4) NOT NULL,
-    negative_score DECIMAL(5,4) NOT NULL,
-    sentiment_category VARCHAR(50) NOT NULL,
-    FOREIGN KEY (movie_review_comment_id) REFERENCES movie_review_comments(id)
+    word VARCHAR(100) NOT NULL,
+    sentiment ENUM('positive', 'negative') NOT NULL,
+    frequency INT NOT NULL DEFAULT 0,
+    UNIQUE(word, sentiment)
 );
-
 
 CREATE TABLE activity_logs (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -63,9 +65,6 @@ CREATE TABLE activity_logs (
     login_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-
-
 
 INSERT INTO roles (role) VALUES 
 ('super_admin'), 
@@ -91,7 +90,7 @@ INSERT INTO movie_genres (movie_id, genre_id) VALUES
 (2, 1),
 (3, 2)
 
-INSERT INTO movie_review_comments (movie_id, user_id, comment, rating) VALUES
+INSERT INTO reviews (movie_id, user_id, comment, rating) VALUES
 (1, 2, 'The movie is good.', 4.0),
 (3, 3, 'Peak ayanokoji', 5.0)
 
