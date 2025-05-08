@@ -11,11 +11,12 @@ $password = $_POST['password'];
 $role_id = $_POST['role'];
 $query = "SELECT * FROM users ORDER BY id DESC";
 
+$hashedPassword = hash('sha256', $password);
 
 if($id){
-    $query = $user->updateUser($role_id, $fname, $lname, $email, $password, $id);
+    $query = $user->updateUser($role_id, $fname, $lname, $email, $hashedPassword, $id);
 } else {
-    $query = $user->addUser($role_id, $fname, $lname, $email, $password);
+    $query = $user->addUser($role_id, $fname, $lname, $email, $hashedPassword);
 }
 
 if ($conn->query($query)) {

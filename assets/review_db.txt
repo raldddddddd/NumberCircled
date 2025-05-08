@@ -66,31 +66,29 @@ CREATE TABLE activity_logs (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-INSERT INTO roles (role) VALUES 
-('super_admin'), 
-('admin'), 
-('user')
-
 INSERT INTO users(role_id, first_name, last_name, email, password) VALUES 
 (1, 'Adrian', 'Sido', 'adrian@gmail.com', 'adrian'),
 (2, 'Gerald', 'Santiago', 'gerald@gmail.com', 'gerald'),
-(3, 'Gio', 'Ferreras', 'gio@gmail.com', 'gio')
+(3, 'Gio', 'Ferreras', 'gio@gmail.com', 'gio');
+
 
 INSERT INTO movies (name, description, release_date, image_url) VALUES
 ('John Weak', 'Dog revenger pew pew', '2020-04-11','johnweak.com'),
 ('Narnia', 'Western Isekai', '2004-08-12','narnia.com'),
-('Classroom Of The Elite', 'Peak Anime', '2010-11-20','cote.com')
+('Classroom Of The Elite', 'Peak Anime', '2010-11-20','cote.com');
 
-INSERT INTO genres (name, description) VALUES
-('Fantasy', 'D&D stuff'),
-('Action', 'Pow pow Beng Beng')
+
+INSERT INTO genres (name) VALUES
+('Fantasy'),
+('Action');
+
 
 INSERT INTO movie_genres (movie_id, genre_id) VALUES
 (1, 2),
 (2, 1),
-(3, 2)
+(3, 2);
+
 
 INSERT INTO reviews (movie_id, user_id, comment, rating) VALUES
 (1, 2, 'The movie is good.', 4.0),
-(3, 3, 'Peak ayanokoji', 5.0)
-
+(3, 3, 'Peak ayanokoji', 5.0);

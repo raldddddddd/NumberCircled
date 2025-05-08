@@ -1,0 +1,73 @@
+html, body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    height: calc(100vh - 80px);
+}
+
+.sidebar-header img {
+    max-height: 60px;
+    object-fit: contain;
+}
+
+.nav-link i{
+    padding-right: 10px;
+}
+
+.nav-link:hover,
+.nav-link:focus:hover,
+.nav-link.active:hover,
+.nav-link.show:hover {
+    background-color: #495057 !important;
+    color: white !important;
+}
+
+.nav-link:focus,
+.nav-link:active,
+.nav-link.active,
+.nav-link.show {
+    background-color: transparent !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.container, main {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.container::-webkit-scrollbar, main::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.list-group-item {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+#positive-words-list li::before,
+#negative-words-list li::before {
+    content: '•';
+    color: #6c757d;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}

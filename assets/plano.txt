@@ -23,3 +23,8 @@ Admin
             <li><?php echo $student['name']; ?></li>
     <?php endforeach; ?>
     -->
+
+
+password is now md5hashed
+reg has been updated with firstname and lastname, but still not assigning a default image
+dashboard now inside but not yet dynamically populated
