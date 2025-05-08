@@ -34,7 +34,7 @@
             <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="report.html"><i class="fas fa-chart-line"></i> Trend Report</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+            <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="/NumberCircled/app/controller/logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
         </li>
     </ul>
 </nav>

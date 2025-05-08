@@ -27,7 +27,6 @@
                     </div>
                 </div>
 
-                <!-- Total Counts Section (Top Metrics) -->
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <div class="card text-white bg-primary mb-3 rounded shadow-sm">
@@ -38,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-success mb-3 rounded shadow-sm">
+                        <div class="card text-white bg-danger mb-3 rounded shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">Total Reviews</h5>
                                 <p class="card-text" id="totalReviews">350</p>
@@ -46,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-warning mb-3 rounded shadow-sm">
+                        <div class="card text-white bg-success mb-3 rounded shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">Average Rating</h5>
                                 <p class="card-text" id="averageRating">4.2</p>
@@ -55,7 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Sentiment Analysis Chart -->
                 <div class="mb-4">
                     <h4>Sentiment Analysis</h4>
                     <div class="bg-light rounded p-3 shadow-sm" style="height: 300px;">
@@ -63,21 +61,19 @@
                     </div>
                 </div>
 
-                <!-- Top Used Words (Positive and Negative) -->
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 text-center">
                         <h5 class="mb-3">Top Used Positive Words</h5>
-                        <ul id="positive-words-list" class="list-group">
-                            <!-- Dynamically populated with words and frequencies -->
-                        </ul>
+                        <div id="positive-words-list" class="d-flex flex-wrap justify-content-center gap-2">
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 text-center">
                         <h5 class="mb-3">Top Used Negative Words</h5>
-                        <ul id="negative-words-list" class="list-group">
-                            <!-- Dynamically populated with words and frequencies -->
-                        </ul>
+                        <div id="negative-words-list" class="d-flex flex-wrap justify-content-center gap-2">
+                        </div>
                     </div>
                 </div>
+
 
                 <!-- Trending Movies Table -->
                 <div class="row">
@@ -114,7 +110,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Dynamically populated with recent activities -->
                                 </tbody>
                             </table>
                         </div>
@@ -185,14 +180,14 @@
         // Populate Top Used Positive Words
         positiveWords.forEach(word => {
             $('#positive-words-list').append(`
-                <li class="list-group-item">${word.word} - ${word.frequency} times</li>
+                <span class="badge rounded-pill bg-success">${word.word} - ${word.frequency} times</span>
             `);
         });
 
         // Populate Top Used Negative Words
         negativeWords.forEach(word => {
             $('#negative-words-list').append(`
-                <li class="list-group-item">${word.word} - ${word.frequency} times</li>
+                <span class="badge rounded-pill bg-danger">${word.word} - ${word.frequency} times</span>
             `);
         });
 
