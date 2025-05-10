@@ -1,3 +1,3 @@
 <?php 
-require_once 'app/view/login.php'
+require_once 'app/view/regis_login/login.html';
 ?>
