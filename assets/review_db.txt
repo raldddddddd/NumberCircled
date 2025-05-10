@@ -66,16 +66,21 @@ CREATE TABLE activity_logs (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+INSERT INTO roles(role) VALUES
+('Super Admin'),
+('Admin'),
+('User');
+
 INSERT INTO users(role_id, first_name, last_name, email, password) VALUES 
-(1, 'Adrian', 'Sido', 'adrian@gmail.com', 'adrian'),
-(2, 'Gerald', 'Santiago', 'gerald@gmail.com', 'gerald'),
-(3, 'Gio', 'Ferreras', 'gio@gmail.com', 'gio');
+(1, 'Adrian', 'Sido', 'adrian@gmail.com', '8c4205ec33d8f6caeaaaa0c10a14138c'),
+(2, 'Gerald', 'Santiago', 'gerald@gmail.com', '380891959a0754c24a7ad3525c2d1e77'),
+(3, 'Gio', 'Ferreras', 'gio@gmail.com', '2bb55d712c4dcbda95497e811b696352');
 
 
 INSERT INTO movies (name, description, release_date, image_url) VALUES
-('John Weak', 'Dog revenger pew pew', '2020-04-11','johnweak.com'),
-('Narnia', 'Western Isekai', '2004-08-12','narnia.com'),
-('Classroom Of The Elite', 'Peak Anime', '2010-11-20','cote.com');
+('John Weak', 'Dog revenger pew pew', '2020-04-11','https://upload.wikimedia.org/wikipedia/en/d/d0/John_Wick_-_Chapter_4_promotional_poster.jpg'),
+('Narnia', 'Western Isekai', '2004-08-12','https://upload.wikimedia.org/wikipedia/en/1/10/The_Chronicles_of_Narnia_-_The_Lion%2C_the_Witch_and_the_Wardrobe.jpg'),
+('Classroom Of The Elite', 'Peak Anime', '2010-11-20','https://upload.wikimedia.org/wikipedia/en/5/52/Y%C5%8Dkoso_Jitsuryoku_Shij%C5%8D_Shugi_no_Ky%C5%8Dshitsu_e%2C_Volume_1.jpg');
 
 
 INSERT INTO genres (name) VALUES
@@ -89,6 +94,7 @@ INSERT INTO movie_genres (movie_id, genre_id) VALUES
 (3, 2);
 
 
-INSERT INTO reviews (movie_id, user_id, comment, rating) VALUES
-(1, 2, 'The movie is good.', 4.0),
-(3, 3, 'Peak ayanokoji', 5.0);
+INSERT INTO reviews (movie_id, user_id, comment, rating, positive_score, negative_score, sentiment_category) VALUES
+(1, 2, 'The movie is good.', 4.0, 0.8, 0.2, 'Positive'),
+(3, 3, 'Peak ayanokoji', 5.0, 1.0, 0, 'Positive'),
+(2, 1, '', 5.0, 1.0, 0, 'Positive');

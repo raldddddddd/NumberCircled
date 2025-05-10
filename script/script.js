@@ -2,7 +2,7 @@ $(document).ready(function () {
     var tableData = [];
     checkSuper();
     loadTables();
-    retrieveTableData();
+    mainloadTables()
     $("#login_form").submit(function (e) {
         e.preventDefault();
         var email = $("#login_email").val();
@@ -106,6 +106,12 @@ $(document).ready(function () {
     function loadTables() {
         $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
             $("#tableLoad").html(data);
+        });
+    }
+
+    function mainloadTables() {
+        $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
+            $(".featured-movies").html(data);
         });
     }
 
