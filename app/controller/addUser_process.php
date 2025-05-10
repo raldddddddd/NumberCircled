@@ -9,7 +9,7 @@ $lname = $_POST['last_name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $role_id = $_POST['role'];
-$query = "SELECT * FROM users ORDER BY id DESC";
+$query = "";
 
 $hashedPassword = md5($password);
 

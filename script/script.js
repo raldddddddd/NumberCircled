@@ -2,7 +2,7 @@ $(document).ready(function () {
     var tableData = [];
     checkSuper();
     loadTables();
-    retrieveTableData();
+    mainloadTables()
     $("#login_form").submit(function (e) {
         e.preventDefault();
         var email = $("#login_email").val();
@@ -20,7 +20,7 @@ $(document).ready(function () {
                         location.href = './app/view/admin/dashboard.php';
                         break;
                     case "3":
-                        location.href = './app/view/user/main_page.php';
+                        location.href = './app/view/main_page/main_page.html';
                         break;
                     case "No Account":
                     case "Invalid Password":
@@ -42,16 +42,15 @@ $(document).ready(function () {
         var password = $("#password").val();
         var first_name = $("#first_name").val();
         var last_name = $("#last_name").val();
-        var role = $("#role").val();
 
         $.ajax({
             url: "/NumberCircled/app/controller/regis_process.php",
             type: "POST",
-            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name, regis_role: role },
+            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name },
             dataType: "text",
             success: function (response) {
                 if (response.includes("success")) {
-                    location.href = '../../index.php';
+                    location.href = '../../../index.php';
                 } else {
                     alert(response);
                 }
@@ -107,6 +106,12 @@ $(document).ready(function () {
     function loadTables() {
         $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
             $("#tableLoad").html(data);
+        });
+    }
+
+    function mainloadTables() {
+        $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
+            $(".featured-movies").html(data);
         });
     }
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $result->fetch_assoc();
     if ($hashed_input_pword === $user['password']) {
         $_SESSION['email'] = $user['email'];
-        $_SESSION['role_id'] = $user['role_id'];
+        $_SESSION['session_role_id'] = $user['role_id'];
         echo $user['role_id'];
     } else {
         echo "Invalid Password";

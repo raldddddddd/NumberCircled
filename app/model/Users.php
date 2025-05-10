@@ -30,11 +30,11 @@ class Users
     }
 
 
-    function registerUser($first_name, $last_name, $email, $password, $role_id)
+    function registerUser($first_name, $last_name, $email, $password)
     {
         $hashedPassword = md5($password);
         global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
+        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('3', '$first_name', '$last_name', '$email', '$hashedPassword')";
     }
 
     function deleteUser($id)

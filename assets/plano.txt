@@ -13,18 +13,67 @@ Super-Admin
 Admin
 -No add and edit admin
 
+<!-- Chevron Previous -->
+        <button class="btn-chevron-next">
+        <i class="fas fa-chevron-left fa-2x"></i>
+        </button>
+        
+        <!-- Movie cards -->
 
-    <!--
-    <?php
-    require_once("../model/Users.php");
-    $user = new Users(); 
-    $students = $user->getAll();
-    foreach ($students as $student): ?>
-            <li><?php echo $student['name']; ?></li>
-    <?php endforeach; ?>
-    -->
+        <div class="text-center ">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Batman_Begins_Poster.jpg/250px-Batman_Begins_Poster.jpg" class="movie-poster"/>
+          <h6 class="mt-2 mb-1">Batman Begins</h6>
+          <div class="d-flex justify-content-center align-items-center gap-3 rating-row">
+            <span><i class="fas fa-thumbs-up text-danger me-1"></i> Mostly Positive</span>
+            <span><i class="fas fa-star text-warning me-1"></i> 4.6</span>
+          </div>
+          <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
+            <span class="genre-tag">Action</span>
+            <span class="genre-tag">Adventure</span>
+          </div>
+        </div>
+        
 
+        <div class="text-center ">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Batman_Begins_Poster.jpg/250px-Batman_Begins_Poster.jpg" class="movie-poster"/>
+          <h6 class="mt-2 mb-1">Batman Begins</h6>
+          <div class="d-flex justify-content-center align-items-center gap-3 rating-row">
+            <span><i class="fas fa-thumbs-up text-danger me-1"></i> Mostly Positive</span>
+            <span><i class="fas fa-star text-warning me-1"></i> 4.6</span>
+          </div>
+          <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
+            <span class="genre-tag">Action</span>
+            <span class="genre-tag">Adventure</span>
+          </div>
+        </div>
 
-password is now md5hashed
-reg has been updated with firstname and lastname, but still not assigning a default image
-dashboard now inside but not yet dynamically populated
+        <div class="text-center ">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Batman_Begins_Poster.jpg/250px-Batman_Begins_Poster.jpg" class="movie-poster"/>
+          <h6 class="mt-2 mb-1">Batman Begins</h6>
+          <div class="d-flex justify-content-center align-items-center gap-3 rating-row">
+            <span><i class="fas fa-thumbs-up text-danger me-1"></i> Mostly Positive</span>
+            <span><i class="fas fa-star text-warning me-1"></i> 4.6</span>
+          </div>
+          <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
+            <span class="genre-tag">Action</span>
+            <span class="genre-tag">Adventure</span>
+          </div>
+        </div>
+        
+        <div class="text-center ">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Batman_Begins_Poster.jpg/250px-Batman_Begins_Poster.jpg" class="movie-poster"/>
+          <h6 class="mt-2 mb-1">Batman Begins</h6>
+          <div class="d-flex justify-content-center align-items-center gap-3 rating-row">
+            <span><i class="fas fa-thumbs-up text-danger me-1"></i> Mostly Positive</span>
+            <span><i class="fas fa-star text-warning me-1"></i> 4.6</span>
+          </div>
+          <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
+            <span class="genre-tag">Action</span>
+            <span class="genre-tag">Adventure</span>
+          </div>
+        </div>
+
+        <!-- Chevron next -->
+        <button class="btn-chevron-next">
+          <i class="fas fa-chevron-right fa-2x"></i>
+          </button>
