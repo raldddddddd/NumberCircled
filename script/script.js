@@ -115,4 +115,103 @@ $(document).ready(function () {
             tableData.push($(this).attr("abbr"));
         });
     }
+
+    // admin dashboard
+    $.ajax({
+        url: '/NumberCircled/app/controller/dashboard-data.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $('#totalUsers').text(data.totalUsers);
+            $('#totalReviews').text(data.totalReviews);
+
+            const sentimentChart = new Chart(document.getElementById('sentimentChart'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(data.sentimentDistribution),
+                    datasets: [{
+                        data: Object.values(data.sentimentDistribution),
+                        backgroundColor: ['#4CAF50', '#F44336', '#FFC107']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            $('#positive-words-list').empty();
+            data.positiveWords.forEach(word => {
+                $('#positive-words-list').append(`<span class="badge bg-success">${word.word} ${word.frequency}</span>`);
+            });
+
+            $('#negative-words-list').empty();
+            data.negativeWords.forEach(word => {
+                $('#negative-words-list').append(`<span class="badge bg-danger">${word.word} ${word.frequency}</span>`);
+            });
+
+            // Destroy if already initialized
+            if ($.fn.DataTable.isDataTable('#trending-movies')) {
+                $('#trending-movies').DataTable().clear().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#recentActivitiesTable')) {
+                $('#recentActivitiesTable').DataTable().clear().destroy();
+            }
+
+            $('#trending-movies tbody').empty();
+            data.trendingMovies.forEach(movie => {
+                $('#trending-movies tbody').append(`
+                    <tr>
+                        <td>${movie.name}</td>
+                        <td>${movie.recent_reviews}</td>
+                        <td>${movie.avg_rating}</td>
+                        <td>${movie.latest_sentiment}</td>
+                    </tr>
+                `);
+            });
+
+            $('#recentActivitiesTable tbody').empty();
+            data.recentActivities.forEach(activity => {
+                $('#recentActivitiesTable tbody').append(`
+                    <tr>
+                        <td>${activity.activity}</td>
+                        <td>${activity.date}</td>
+                    </tr>
+                `);
+            });
+
+            $('#trending-movies').DataTable({
+                order: [
+                    [1, 'desc']
+                ]
+            });
+
+            $('#recentActivitiesTable').DataTable({
+                order: [
+                    [1, 'desc']
+                ]
+            });
+        },
+        error: function () {
+            alert('Failed to fetch dashboard data.');
+        }
+    });
+});
+
+
+$('#userMenu').on('show.bs.collapse', function () {
+    $(this).prev().find('.toggle-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    console.log("sad")
+});
+$('#userMenu').on('hide.bs.collapse', function () {
+    $(this).prev().find('.toggle-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    var collapseElements = document.querySelectorAll('.collapse');
+    collapseElements.forEach(function (element) {
+        var bsCollapse = new bootstrap.Collapse(element, {
+            toggle: false // Optional: start with it collapsed
+        });
+    });
 });

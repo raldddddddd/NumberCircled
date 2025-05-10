@@ -42,4 +42,5 @@ class Users
         global $conn;
         return $query = "DELETE FROM users WHERE id='$id'";
     }
+
 }

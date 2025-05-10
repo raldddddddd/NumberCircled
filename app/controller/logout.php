@@ -3,6 +3,6 @@ session_start();
 
 session_destroy();
 
-header('Location: /NumberCircled/app/view/login.php');
+header('Location: /NumberCircled/index.php');
 exit;
 ?>
