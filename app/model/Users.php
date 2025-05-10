@@ -29,18 +29,22 @@ class Users
         return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
     }
 
-
     function registerUser($first_name, $last_name, $email, $password, $role_id)
     {
-        $hashedPassword = md5($password);
         global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
+        $hashedPassword = md5($password);
+        $defaultImagePath = __DIR__ . '/../../assets/default-profile.jpeg'; 
+        $imageData = file_get_contents($defaultImagePath);
+        $imageEscaped = $conn->real_escape_string($imageData);
+
+        global $conn;
+        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password, profile_image) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword', '$imageEscaped')";
     }
+
 
     function deleteUser($id)
     {
         global $conn;
         return $query = "DELETE FROM users WHERE id='$id'";
     }
-
 }

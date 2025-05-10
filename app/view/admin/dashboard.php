@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: index.php");
+    exit;
+}
+
+$first_name = $_SESSION['first_name'];
+$last_name = $_SESSION['last_name'];
+$profile_image = $_SESSION['profile_image'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
