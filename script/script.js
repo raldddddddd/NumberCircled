@@ -20,7 +20,7 @@ $(document).ready(function () {
                         location.href = './app/view/admin/dashboard.php';
                         break;
                     case "3":
-                        location.href = './app/view/user/main_page.php';
+                        location.href = './app/view/main_page/main_page.html';
                         break;
                     case "No Account":
                     case "Invalid Password":
