@@ -42,16 +42,15 @@ $(document).ready(function () {
         var password = $("#password").val();
         var first_name = $("#first_name").val();
         var last_name = $("#last_name").val();
-        var role = $("#role").val();
 
         $.ajax({
             url: "/NumberCircled/app/controller/regis_process.php",
             type: "POST",
-            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name, regis_role: role },
+            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name },
             dataType: "text",
             success: function (response) {
                 if (response.includes("success")) {
-                    location.href = '../../index.php';
+                    location.href = '../../../index.php';
                 } else {
                     alert(response);
                 }

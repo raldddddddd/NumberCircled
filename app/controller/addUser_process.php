@@ -9,9 +9,9 @@ $lname = $_POST['last_name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $role_id = $_POST['role'];
-$query = "SELECT * FROM users ORDER BY id DESC";
+$query = "";
 
-$hashedPassword = hash('sha256', $password);
+$hashedPassword = md5($password);
 
 if($id){
     $query = $user->updateUser($role_id, $fname, $lname, $email, $hashedPassword, $id);

@@ -8,7 +8,6 @@ $(document).ready(function() {
 
 $('#userMenu').on('show.bs.collapse', function () {
     $(this).prev().find('.toggle-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-    console.log("sad")
 }); 
 $('#userMenu').on('hide.bs.collapse', function () {
     $(this).prev().find('.toggle-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
