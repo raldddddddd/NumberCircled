@@ -66,10 +66,15 @@ CREATE TABLE activity_logs (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+
+ALTER TABLE users ADD COLUMN last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
+
+
 INSERT INTO roles(role) VALUES
 ('Super Admin'),
 ('Admin'),
 ('User');
+
 
 INSERT INTO users(role_id, first_name, last_name, email, password) VALUES 
 (1, 'Adrian', 'Sido', 'adrian@gmail.com', '8c4205ec33d8f6caeaaaa0c10a14138c'),
