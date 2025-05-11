@@ -1,0 +1,48 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #14181c;
+}
+
+.custom-navbar-border {
+  border-bottom: 1px solid #4d504c;
+}
+
+
+.landing-container {
+  background: url('https://www.wondermind.com/wp-content/uploads/2024/09/20-Feel-Good-Movies-People-Swear-By-For-Your-Next-Bad-Day.jpg?w=960') center center no-repeat;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #14181c; /* fallback */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #14181c;
+  opacity: 0.75; /* controls darkness only, no color tint */
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.custom-red {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+  color: white;
+}
+
+.custom-red:hover, .btn-outline-light:hover {
+  background-color: #a11212;
+  border-color: #a11212;
+  color: white;
+}
+
