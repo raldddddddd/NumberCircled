@@ -90,12 +90,14 @@ INSERT INTO movies (name, description, release_date, image_url) VALUES
 
 INSERT INTO genres (name) VALUES
 ('Fantasy'),
+('Adventure'),
 ('Action');
 
 
 INSERT INTO movie_genres (movie_id, genre_id) VALUES
 (1, 2),
 (2, 1),
+(2, 3),
 (3, 2);
 
 

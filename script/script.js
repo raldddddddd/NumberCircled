@@ -115,12 +115,6 @@ $(document).ready(function () {
         });
     }
 
-    function retrieveTableData() {
-        $("table thead tr th").each(function () {
-            tableData.push($(this).attr("abbr"));
-        });
-    }
-
     // admin dashboard
     $.ajax({
         url: '/NumberCircled/app/controller/dashboard-data.php',
