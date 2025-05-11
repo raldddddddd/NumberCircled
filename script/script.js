@@ -120,13 +120,21 @@ $(document).ready(function () {
     //         $('#tableLoad').html(data);
     //         $('#table').DataTable();
     //     });
-    // }
+    // } section.featured-section > div.featured-movies > div.movie-div > a.movie-link > .movie-poster
 
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);
         });
     }
+
+
+    $(document).on('click', function(e) {
+        if ($(e.target).is('.movie-poster')) {
+          alert("w");
+        } 
+    });
+
     // admin dashboard
     $.ajax({
         url: '/NumberCircled/app/controller/dashboard-data.php',

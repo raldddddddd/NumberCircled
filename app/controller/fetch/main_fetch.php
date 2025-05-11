@@ -21,8 +21,10 @@ while ($row = $result->fetch_assoc()) {
         $genres .= "<span class='genre-tag'>{$fetchedGenre['genre']}</span>";
     }
 
-    $output .= "<div class='text-center'>
+    $output .= "<div class='text-center movie-div'>
+    <a class='movie-link' href='../movie_review/movie_review_page.php'>
     <img src='{$row['image_url']}' class='movie-poster'/>
+    </a>
     <h6 class='mt-2 mb-1'>{$row['name']}</h6>
         <div class='d-flex justify-content-center align-items-center gap-3 rating-row'>
             <span><i class='fas fa-thumbs-up text-danger me-1'></i>{$row['sentiment_category']}</span>
