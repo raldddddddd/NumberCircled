@@ -18,7 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $result->fetch_assoc();
     if ($hashed_input_pword === $user['password']) {
         $_SESSION['email'] = $user['email'];
-        $_SESSION['session_role_id'] = $user['role_id'];
+        $_SESSION['role_id'] = $user['role_id'];
+        $_SESSION['first_name'] = $user['first_name'];
+        $_SESSION['last_name'] = $user['last_name'];
+
+        // Handle LONGBLOB (convert to base64 string)
+        if (!empty($user['profile_image'])) {
+            $_SESSION['profile_image'] = 'data:image/jpeg;base64,' . base64_encode($user['profile_image']);
+        } else {
+            $_SESSION['profile_image'] = 'default-image-path.jpg'; // fallback if needed
+        }
         echo $user['role_id'];
     } else {
         echo "Invalid Password";
