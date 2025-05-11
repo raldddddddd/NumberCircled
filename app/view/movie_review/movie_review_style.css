@@ -1,0 +1,287 @@
+body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    padding: 10px 20px;
+}
+
+.custom-navbar {
+    background-color: transparent;
+    backdrop-filter: blur(4px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensures it’s above the hero image */
+}
+
+.search-container {
+    position: relative;
+    width: 50%;
+}
+
+.search-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 15px;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+    color: #888;
+}
+
+.hero-section {
+    height: 70vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('https://external-preview.redd.it/CLHUeUoH-ZRhRzLR5fVCewftQmQrfFD7dAYf8__6hTY.jpg?width=640&crop=smart&auto=webp&s=ed20408e6892edca60cbe4446536228e83398b1a') no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+
+.content-wrapper {
+    position: relative;
+    margin-top: -150px;
+}
+
+.movie-card {
+    position: relative;
+    height: 100%;
+}
+
+.movie-card-poster{
+    background-image: url('https://external-preview.redd.it/CLHUeUoH-ZRhRzLR5fVCewftQmQrfFD7dAYf8__6hTY.jpg?width=640&crop=smart&auto=webp&s=ed20408e6892edca60cbe4446536228e83398b1a');
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding-top: 150%;
+}
+
+.info-card {
+    background-color: #1e2126;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 20px;
+    text-align: center;
+}
+
+.section-title {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.section-content {
+    margin-bottom: 0;
+    color: #e9ecef;
+}
+
+.rating-box {
+    background-color: #121212;
+    padding: 15px;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.rating-stars {
+    color: #ffc107;
+}
+
+.genre-pill {
+    background-color: transparent;
+    border: 1px solid #6c757d;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 15px;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.control-buttons {
+    padding: 0 20px;
+}
+
+.review-box {
+    background-color: #1e2126;
+    border-radius: 8px;
+    color: #e9ecef;
+    min-height: 150px;
+}
+
+.text-muted-custom {
+    font-size: 0.85rem;
+    color: #adb5bd;
+}
+
+
+.review-section-wrapper {
+background-color: #1a1d22; /* slightly lighter than body for contrast */
+border-radius: 10px;
+margin-top: 60px;
+margin-bottom: 40px;
+max-width: 1300px;
+padding-left: 15px;
+padding-right: 15px;
+}
+
+
+.custom-footer {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+  
+.custom-footer .footer-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+  
+.custom-footer .footer-link:hover {
+    text-decoration: underline;
+}
+
+
+
+/*Modal Stuff*/
+.modal {
+    display: none;
+    height: auto;
+    width: auto;
+    background-color: #445566;
+    border-radius: 8px;
+    color: white;
+    max-width: 750px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #3a4a5a;
+    border-bottom: 1px solid #2c3a48;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .close {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .modal-body {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .modal-poster {
+    background-image: url('https://external-preview.redd.it/CLHUeUoH-ZRhRzLR5fVCewftQmQrfFD7dAYf8__6hTY.jpg?width=640&crop=smart&auto=webp&s=ed20408e6892edca60cbe4446536228e83398b1a');
+    width: 150px;
+    height: 225px; /* Will not work alone for backgrounds — set a fixed height or use aspect ratio */
+    aspect-ratio: 2/3; 
+    background-size: cover;     
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .details {
+    flex: 1;
+  }
+
+  .details h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+  }
+
+  .year {
+    font-weight: 400;
+    opacity: 0.7;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+  }
+
+  textarea {
+    width: 90%;
+    background: #d0e0f0;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    resize: vertical;
+    color: #333;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .rating-select {
+    margin-top: 1.2rem;
+  }
+
+  .rating-select .stars {
+    display: inline-block;
+    direction: rtl;
+  }
+
+  .rating-select input {
+    display: none;
+  }
+
+  .rating-select label {
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .rating-select input:checked ~ label,
+  .rating-select label:hover,
+  .rating-select label:hover ~ label {
+    color: gold;
+  }
+
+  .modal-footer {
+    background-color: #3a4a5a;
+    padding: 1rem 1.5rem;
+    text-align: right;
+  }
+
+  .save-button {
+    background-color: #00b140;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  
