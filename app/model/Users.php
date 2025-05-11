@@ -18,6 +18,7 @@ class Users
 
     function updateUser($role_id, $fname, $lname, $email, $password, $id)
     {
+        $hashedPassword = md5($password);
         global $conn;
         return $query = "UPDATE users SET role_id='$role_id', first_name='$fname', last_name='$lname', email='$email', password='$password' WHERE id='$id'";
     }
@@ -29,18 +30,23 @@ class Users
         return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
     }
 
-    function registerUser($first_name, $last_name, $email, $password, $role_id)
+    function registerUser($first_name, $last_name, $email, $password)
     {
         global $conn;
         $hashedPassword = md5($password);
-        $defaultImagePath = __DIR__ . '/../../assets/default-profile.jpeg'; 
+        $defaultImagePath = __DIR__ . '/../../assets/default-profile.jpeg';
         $imageData = file_get_contents($defaultImagePath);
         $imageEscaped = $conn->real_escape_string($imageData);
-
-        global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password, profile_image) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword', '$imageEscaped')";
+        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password, profile_image) VALUES ('3', '$first_name', '$last_name', '$email', '$hashedPassword', '$imageEscaped')";
     }
 
+    function emailExists($email)
+    {
+        global $conn;
+        $query = "SELECT id FROM users WHERE email = '$email'";
+        $result = $conn->query($query);
+        return $result && $result->num_rows > 0;
+    }
 
     function deleteUser($id)
     {

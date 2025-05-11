@@ -11,7 +11,7 @@ body, html {
 
 
 .landing-container {
-  background: url('https://www.wondermind.com/wp-content/uploads/2024/09/20-Feel-Good-Movies-People-Swear-By-For-Your-Next-Bad-Day.jpg?w=960') center center no-repeat;
+  background: url('../../assets/hero-bg.webp') center center no-repeat;
   background-size: cover;
   height: 100vh;
   position: relative;

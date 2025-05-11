@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 
-class DashboardModel {
+class Dashboard {
     protected $conn;
 
     public function __construct($dbConnection) {

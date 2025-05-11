@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var tableData = [];
     checkSuper();
-    loadTables();
+    // loadTables();
     mainloadTables()
     $("#login_form").submit(function (e) {
         e.preventDefault();
@@ -17,10 +17,10 @@ $(document).ready(function () {
                 switch (response.trim()) {
                     case "1":
                     case "2":
-                        location.href = './app/view/admin/dashboard.php';
+                        location.href = './admin/dashboard.php';
                         break;
                     case "3":
-                        location.href = './app/view/main_page/main_page.html';
+                        location.href = './main_page/main_page.html';
                         break;
                     case "No Account":
                     case "Invalid Password":
@@ -40,25 +40,33 @@ $(document).ready(function () {
         e.preventDefault();
         var email = $("#email").val();
         var password = $("#password").val();
+        var conf_password = $("#conf_password").val();
         var first_name = $("#first_name").val();
         var last_name = $("#last_name").val();
 
-        $.ajax({
-            url: "/NumberCircled/app/controller/regis_process.php",
-            type: "POST",
-            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name },
-            dataType: "text",
-            success: function (response) {
-                if (response.includes("success")) {
-                    location.href = '../../../index.php';
-                } else {
-                    alert(response);
+        if (password !== conf_password) {
+            console.log("asdsadsd")
+            alert('Passwords do not match!');
+        } else {
+            $.ajax({
+                url: "/NumberCircled/app/controller/regis_process.php",
+                type: "POST",
+                data: { regis_email: email, regis_password: password, regis_conf_password: conf_password, regis_first_name: first_name, regis_last_name: last_name },
+                dataType: "text",
+                success: function (response) {
+                    if (response.includes("success")) {
+                        location.href = 'login.php';
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    alert("Error: " + error.statusText);
                 }
-            },
-            error: function (error) {
-                alert("Error: " + error.statusText);
-            }
-        });
+            });
+        }
+
+
     });
 
     $("#userForm").submit(function (e) {
@@ -84,30 +92,35 @@ $(document).ready(function () {
         $("#userForm")[0].reset();
     });
 
-    $(document).on("click", ".editBtn", function () {
-        $.each($(this).data(), function (name, value) {
-            $("#" + name).val(value);
-        });
-    });
-
-    $(document).on("click", ".deleteBtn", function () {
-        $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
-            alert(data);
-            loadTables();
-        })
-    });
-
     function checkSuper() {
         if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
             $("#adminOpt").remove();
         }
     }
 
-    function loadTables() {
-        $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
-            $("#tableLoad").html(data);
+    $(document).on("click", ".editBtn", function () {
+        $.each($(this).data(), function (name, value) {
+            $("#" + name).val(value);
         });
-    }
+    });
+
+        $(document).on("click", ".deleteBtn", function () {
+            $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
+                alert(data);
+                loadTables();
+            })
+        });
+
+    // function loadTables() {
+    //     if ($.fn.DataTable.isDataTable('#myTable')) {
+    //         $('#table').DataTable().clear().destroy();
+    //     }
+
+    //     $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
+    //         $('#tableLoad').html(data);
+    //         $('#table').DataTable();
+    //     });
+    // }
 
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
@@ -120,87 +133,6 @@ $(document).ready(function () {
             tableData.push($(this).attr("abbr"));
         });
     }
-
-    // admin dashboard
-    $.ajax({
-        url: '/NumberCircled/app/controller/dashboard-data.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            $('#totalUsers').text(data.totalUsers);
-            $('#totalReviews').text(data.totalReviews);
-
-            const sentimentChart = new Chart(document.getElementById('sentimentChart'), {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(data.sentimentDistribution),
-                    datasets: [{
-                        data: Object.values(data.sentimentDistribution),
-                        backgroundColor: ['#4CAF50', '#F44336', '#FFC107']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-
-            $('#positive-words-list').empty();
-            data.positiveWords.forEach(word => {
-                $('#positive-words-list').append(`<span class="badge bg-success">${word.word} ${word.frequency}</span>`);
-            });
-
-            $('#negative-words-list').empty();
-            data.negativeWords.forEach(word => {
-                $('#negative-words-list').append(`<span class="badge bg-danger">${word.word} ${word.frequency}</span>`);
-            });
-
-            // Destroy if already initialized
-            if ($.fn.DataTable.isDataTable('#trending-movies')) {
-                $('#trending-movies').DataTable().clear().destroy();
-            }
-            if ($.fn.DataTable.isDataTable('#recentActivitiesTable')) {
-                $('#recentActivitiesTable').DataTable().clear().destroy();
-            }
-
-            $('#trending-movies tbody').empty();
-            data.trendingMovies.forEach(movie => {
-                $('#trending-movies tbody').append(`
-                    <tr>
-                        <td>${movie.name}</td>
-                        <td>${movie.recent_reviews}</td>
-                        <td>${movie.avg_rating}</td>
-                        <td>${movie.latest_sentiment}</td>
-                    </tr>
-                `);
-            });
-
-            $('#recentActivitiesTable tbody').empty();
-            data.recentActivities.forEach(activity => {
-                $('#recentActivitiesTable tbody').append(`
-                    <tr>
-                        <td>${activity.activity}</td>
-                        <td>${activity.date}</td>
-                    </tr>
-                `);
-            });
-
-            $('#trending-movies').DataTable({
-                order: [
-                    [1, 'desc']
-                ]
-            });
-
-            $('#recentActivitiesTable').DataTable({
-                order: [
-                    [1, 'desc']
-                ]
-            });
-        },
-        error: function () {
-            alert('Failed to fetch dashboard data.');
-        }
-    });
 });
 
 
