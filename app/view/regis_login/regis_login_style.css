@@ -15,11 +15,19 @@ body {
   
   /* Shared Button Styles */
   .btn-primary {
-    background-color: #0066ff;
+    background-color: #b91c1c;
     border: none;
   }
   .btn-primary:hover {
-    background-color: #005ce6;
+    background-color: #a11212;
+  }
+
+  .text-primary{
+    color: #b91c1c !important;
+  }
+
+  .text-primary:hover{
+    color: #a11212 !important;
   }
   
   /* Shared Text Muted Custom */

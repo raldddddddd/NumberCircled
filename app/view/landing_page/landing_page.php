@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar px-4 py-3 position-absolute top-0 start-0 end-0 z-2 d-flex justify-content-between align-items-center custom-navbar-border">
       <div class="d-flex align-items-center">
-        <img src="../../../assets/logo-white-text.png" class="me-2 img-fluid" style="max-height: 35px;" alt="Logo" />
+        <img src="/NumberCircled/assets/logo-white-text.png" class="me-2 img-fluid" style="max-height: 35px;" alt="Logo" />
 
         <span class="fw-semibold fs-6">Numbercircld</span>
       </div>
@@ -33,7 +33,7 @@
           Watch, Rate,<br />
           Review & Post.
         </h1>
-        <p class="text-light small mb-4 px-lg-5">
+        <p class="text-light small mb-4 px-lg-4">
           Welcome to Numbercircld, a centralized website for film critics and lovers alike.
           Share your opinions about films you love (or hate). Connect through the stories that
           moved you or have yet to. <br />Your life in film.
