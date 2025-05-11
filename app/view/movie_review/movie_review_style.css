@@ -262,9 +262,12 @@ padding-right: 15px;
     cursor: pointer;
   }
 
-  .rating-select input:checked ~ label,
-  .rating-select label:hover,
+   .rating-select label:hover,
   .rating-select label:hover ~ label {
+    color: #b91c1c;
+  }
+
+  .rating-select input:checked ~ label{
     color: gold;
   }
 
