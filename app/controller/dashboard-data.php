@@ -1,10 +1,9 @@
 <?php
-require_once __DIR__ . "/../../config/database.php";
-require_once __DIR__ . "/../model/DashboardModel.php";
+require_once __DIR__ . "/../model/Dashboard.php";
 
 header('Content-Type: application/json');
 
-$model = new DashboardModel($conn);
+$model = new Dashboard($conn);
 
 $response = [
     "totalUsers" => $model->getTotalUsers(),

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var tableData = [];
     checkSuper();
-    loadTables();
+    // loadTables();
     mainloadTables()
     $("#login_form").submit(function (e) {
         e.preventDefault();
@@ -17,10 +17,10 @@ $(document).ready(function () {
                 switch (response.trim()) {
                     case "1":
                     case "2":
-                        location.href = './app/view/admin/dashboard.php';
+                        location.href = './admin/dashboard.php';
                         break;
                     case "3":
-                        location.href = './app/view/main_page/main_page.html';
+                        location.href = './main_page/main_page.html';
                         break;
                     case "No Account":
                     case "Invalid Password":
@@ -40,25 +40,33 @@ $(document).ready(function () {
         e.preventDefault();
         var email = $("#email").val();
         var password = $("#password").val();
+        var conf_password = $("#conf_password").val();
         var first_name = $("#first_name").val();
         var last_name = $("#last_name").val();
 
-        $.ajax({
-            url: "/NumberCircled/app/controller/regis_process.php",
-            type: "POST",
-            data: { regis_email: email, regis_password: password, regis_first_name: first_name, regis_last_name: last_name },
-            dataType: "text",
-            success: function (response) {
-                if (response.includes("success")) {
-                    location.href = '../../../index.php';
-                } else {
-                    alert(response);
+        if (password !== conf_password) {
+            console.log("asdsadsd")
+            alert('Passwords do not match!');
+        } else {
+            $.ajax({
+                url: "/NumberCircled/app/controller/regis_process.php",
+                type: "POST",
+                data: { regis_email: email, regis_password: password, regis_conf_password: conf_password, regis_first_name: first_name, regis_last_name: last_name },
+                dataType: "text",
+                success: function (response) {
+                    if (response.includes("success")) {
+                        location.href = 'login.php';
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    alert("Error: " + error.statusText);
                 }
-            },
-            error: function (error) {
-                alert("Error: " + error.statusText);
-            }
-        });
+            });
+        }
+
+
     });
 
     $("#userForm").submit(function (e) {
@@ -84,37 +92,41 @@ $(document).ready(function () {
         $("#userForm")[0].reset();
     });
 
-    $(document).on("click", ".editBtn", function () {
-        $.each($(this).data(), function (name, value) {
-            $("#" + name).val(value);
-        });
-    });
-
-    $(document).on("click", ".deleteBtn", function () {
-        $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
-            alert(data);
-            loadTables();
-        })
-    });
-
     function checkSuper() {
         if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
             $("#adminOpt").remove();
         }
     }
 
-    function loadTables() {
-        $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
-            $("#tableLoad").html(data);
+    $(document).on("click", ".editBtn", function () {
+        $.each($(this).data(), function (name, value) {
+            $("#" + name).val(value);
         });
-    }
+    });
+
+        $(document).on("click", ".deleteBtn", function () {
+            $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
+                alert(data);
+                loadTables();
+            })
+        });
+
+    // function loadTables() {
+    //     if ($.fn.DataTable.isDataTable('#myTable')) {
+    //         $('#table').DataTable().clear().destroy();
+    //     }
+
+    //     $.get("/NumberCircled/app/controller/fetch/fetch.php", { page: $("#currentPage").val() }, function (data) {
+    //         $('#tableLoad').html(data);
+    //         $('#table').DataTable();
+    //     });
+    // }
 
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);
         });
     }
-
     // admin dashboard
     $.ajax({
         url: '/NumberCircled/app/controller/dashboard-data.php',

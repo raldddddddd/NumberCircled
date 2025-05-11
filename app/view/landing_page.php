@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <title>Numbercircld | Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="landing_page_style.css" />
+  <link rel="stylesheet" href="app/view/landing_page_style.css" />
 </head>
 <body>
   <div class="landing-container position-relative text-white">
@@ -20,7 +22,7 @@
         <span class="fw-semibold fs-6">Numbercircld</span>
       </div>
       <div>
-        <a href="#" class="btn custom-red rounded-pill px-4 py-2">Log in</a>
+        <a href="app/view/login.php" class="btn custom-red rounded-pill px-4 py-2">Log in</a>
       </div>
     </nav>
 
@@ -38,7 +40,7 @@
           Share your opinions about films you love (or hate). Connect through the stories that
           moved you or have yet to. <br />Your life in film.
         </p>
-        <a href="#" class="btn btn-outline-light rounded-pill px-4 py-2">
+        <a href="app/view/registration.php" class="btn btn-outline-light rounded-pill px-4 py-2">
           Get Started <i class="fas fa-arrow-right ms-2"></i>
         </a>
       </div>

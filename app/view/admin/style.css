@@ -24,6 +24,11 @@ main {
     color: white !important;
 }
 
+.nav-link.active-page {
+    background-color: #495057 !important;
+    color: white !important;
+}
+
 .nav-link:focus,
 .nav-link:active,
 .nav-link.active,
