@@ -3,43 +3,27 @@ require_once __DIR__ . '/../../config/database.php';
 
 class Movies
 {
-    function getUser($input_username)
-    {
-        global $conn;
-        return $query = "SELECT * FROM users WHERE email='$input_username'";
+    protected $conn;
+    public function __construct($dbConnection) {
+        $this->conn = $dbConnection;
     }
 
-    function getRole($name)
+    function getMovie($id)
     {
-        global $conn;
-        $query = $conn->query("SELECT * FROM users WHERE name='$name'");
-        return $query['name'];
+        $query = "SELECT * FROM movies WHERE id='$id'";
+        return $this->conn->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    function getGenre($id){
+        $query = "SELECT g.name as genre FROM movie_genres as mg
+                INNER JOIN genres as g ON g.id = mg.genre_id
+                WHERE mg.movie_id ='$id'";
+        return $this->conn->query($query)->fetch_all(MYSQLI_ASSOC);
     }
 
-    function updateUser($role_id, $fname, $lname, $email, $password, $id)
-    {
-        global $conn;
-        return $query = "UPDATE users SET role_id='$role_id', first_name='$fname', last_name='$lname', email='$email', password='$password' WHERE id='$id'";
+    function getReviewDetail($id){
+        $query="SELECT sentiment_category FROM reviews WHERE movie_id ='2'";
+        return $this->conn->query($query)->fetch_all(MYSQLI_ASSOC);
     }
 
-    function addUser($role_id, $first_name, $last_name, $email, $password)
-    {
-        $hashedPassword = md5($password);
-        global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
-    }
-
-
-    function registerUser($first_name, $last_name, $email, $password)
-    {
-        $hashedPassword = md5($password);
-        global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('3', '$first_name', '$last_name', '$email', '$hashedPassword')";
-    }
-
-    function deleteUser($id)
-    {
-        global $conn;
-        return $query = "DELETE FROM users WHERE id='$id'";
-    }
 }

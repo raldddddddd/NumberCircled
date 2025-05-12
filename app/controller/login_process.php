@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $result->fetch_assoc();
     if ($hashed_input_pword === $user['password']) {
         $_SESSION['email'] = $user['email'];
+        $_SESSION['user_id'] = $user['id'];
         $_SESSION['role_id'] = $user['role_id'];
         $_SESSION['first_name'] = $user['first_name'];
         $_SESSION['last_name'] = $user['last_name'];

@@ -103,4 +103,4 @@ INSERT INTO movie_genres (movie_id, genre_id) VALUES
 INSERT INTO reviews (movie_id, user_id, comment, rating, positive_score, negative_score, sentiment_category) VALUES
 (1, 2, 'The movie is good.', 4.0, 0.8, 0.2, 'Positive'),
 (3, 3, 'Peak ayanokoji', 5.0, 1.0, 0, 'Positive'),
-(2, 1, '', 5.0, 1.0, 0, 'Positive');
+(2, 1, 'Fantashit', 5.0, 1.0, 0, 'Positive');

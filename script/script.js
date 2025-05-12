@@ -2,7 +2,9 @@ $(document).ready(function () {
     var tableData = [];
     checkSuper();
     // loadTables();
-    mainloadTables()
+    mainloadTables();
+    //loadMovieReview();
+
     $("#login_form").submit(function (e) {
         e.preventDefault();
         var email = $("#login_email").val();
@@ -92,11 +94,41 @@ $(document).ready(function () {
         $("#userForm")[0].reset();
     });
 
-    function checkSuper() {
-        if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
-            $("#adminOpt").remove();
+    $("#saveReviewBtn").click(function(){
+        alert($("input[name='rating']:checked").val());
+        alert($("#movie_id").val());
+        alert($("#user_id").val());
+    });
+
+    $('#saveReviewBtn').click(function(e){
+        e.preventDefault();
+        var rating = $('input[name="rating"]:checked').val();
+        var review = $('#textReview').val().trim();
+    
+        if (!rating || review === '') {
+            alert('Please select a rating and write a review.');
+            return;
         }
-    }
+        $.ajax({
+            url: "/NumberCircled/app/controller/review_process.php",
+            method: "POST",
+            data: {
+                rating: $("input[name='rating']:checked").val(),
+                movie_id: $("#movie_id").val(),
+                user_id: $("#user_id").val()
+            },
+            success: function(data){
+                alert("wow");
+            },
+            error: function () {
+                alert('Failed to update movie review data.');
+            }
+        });
+    
+        alert(`Thanks for your review!\n\nRating: ${rating} star(s)\nReview: ${review}`);
+        $('#reviewModal').fadeOut();
+        $('#reviewForm')[0].reset();
+    });
 
     $(document).on("click", ".editBtn", function () {
         $.each($(this).data(), function (name, value) {
@@ -104,12 +136,12 @@ $(document).ready(function () {
         });
     });
 
-        $(document).on("click", ".deleteBtn", function () {
-            $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
-                alert(data);
-                loadTables();
-            })
-        });
+    $(document).on("click", ".deleteBtn", function () {
+        $.post("../../controller/delete.php", { id: $(this).data("id") }, function (data) {
+            alert(data);
+            loadTables();
+        })
+    });
 
     // function loadTables() {
     //     if ($.fn.DataTable.isDataTable('#myTable')) {
@@ -120,7 +152,7 @@ $(document).ready(function () {
     //         $('#tableLoad').html(data);
     //         $('#table').DataTable();
     //     });
-    // } section.featured-section > div.featured-movies > div.movie-div > a.movie-link > .movie-poster
+    // } 
 
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
@@ -128,12 +160,49 @@ $(document).ready(function () {
         });
     }
 
+    function checkSuper() {
+        if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
+            $("#adminOpt").remove();
+        }
+    }
 
-    $(document).on('click', function(e) {
-        if ($(e.target).is('.movie-poster')) {
-          alert("w");
-        } 
+    
+    //Review
+    $.ajax({
+        url: "/NumberCircled/app/controller/fetch/review_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+            $.each(data.movie['0'], function(key, value) {
+                if(key == "release_date"){
+                    $("[name='release_date']").text(value.split("-")[0])
+                } else if(key == "image_url"){
+                    $("[name='image_url']").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+                } else {
+                    $(`[name='${key}']`).text(value);
+                }
+            });
+
+            $.each(data.review_detail['0'], function(key, value) {
+                $(`[name='${key}']`).text(value);
+
+            });
+
+            var genres = "";
+            for(var num in data.genre){
+                genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
+            }
+            $(".genre-list").append(genres);
+
+
+        },
+        error: function () {
+            alert('Failed to fetch movie review data.');
+        }
     });
+    
 
     // admin dashboard
     $.ajax({

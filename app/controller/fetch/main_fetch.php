@@ -21,9 +21,9 @@ while ($row = $result->fetch_assoc()) {
         $genres .= "<span class='genre-tag'>{$fetchedGenre['genre']}</span>";
     }
 
-    $output .= "<div class='text-center movie-div'>
-    <a class='movie-link' href='../movie_review/movie_review_page.php'>
-    <img src='{$row['image_url']}' class='movie-poster'/>
+    $output .= "<div class='text-center'>
+    <a class='movie-link' href='/NumberCircled/app/controller/fetch/session_fetch.php?movie={$row['id']}'>
+    <img value='{$row['name']}' src='{$row['image_url']}' class='movie-poster' id='poster'/>
     </a>
     <h6 class='mt-2 mb-1'>{$row['name']}</h6>
         <div class='d-flex justify-content-center align-items-center gap-3 rating-row'>
