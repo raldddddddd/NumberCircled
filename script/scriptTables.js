@@ -32,14 +32,14 @@ $(document).ready(function () {
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" required>
                 </div>
-                                   <div class="mb-3">
-        <label class="form-label">Profile Image</label>
-        <input type="file" class="form-control" name="profile_image" accept="image/*" required>
-    </div>`;
+                <div class="mb-3">
+                    <label class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" name="profile_image" accept="image/*" required>
+                </div>`;
 
-        const roleOptions = sessionRole == 1
-    ? `<option value="2">Admin</option><option value="3">User</option>`
-    : `<option value="3">User</option>`;
+            const roleOptions = sessionRole == 1
+                ? `<option value="2">Admin</option><option value="3">User</option>`
+                : `<option value="3">User</option>`;
 
             modalBody.innerHTML += `
                 <div class="mb-3">
@@ -93,65 +93,157 @@ $(document).ready(function () {
             }, 0);
         }
         $('#editModalLabel').text(isAddMode ? 'Add Record' : 'Edit Record');
-$('#modal-submit-btn').text(isAddMode ? 'Add Record' : 'Save Changes');
+        $('#modal-submit-btn').text(isAddMode ? 'Add Record' : 'Save Changes');
         editModal.show();
     });
-
     // Edit Button
     $(document).on('click', '.editBtn', async function () {
         isAddMode = false;
         const button = this;
+        const page = $("#currentPage").val();
         const dataAttrs = [...button.attributes].filter(attr => attr.name.startsWith('data-'));
         modalBody.innerHTML = '';
+        document.getElementById('edit-id').value = '';
+
         const genreResponse = await $.get('/NumberCircled/app/controller/fetch/fetch_options.php?type=genres');
         const allGenres = genreResponse;
         let selectedGenres = [];
 
-        for (const attr of dataAttrs) {
-            const key = attr.name.replace('data-', '');
-            const value = attr.value;
+        // USERS
+        if (page === 'users.php') {
+            const sessionRole = parseInt($("#sessionRole").val());
+            const sessionUserId = parseInt($("#sessionUserId").val());
 
-            if (key === 'id') {
-                document.getElementById('edit-id').value = value;
-                continue;
+            let userData = {};
+            dataAttrs.forEach(attr => {
+                const key = attr.name.replace('data-', '');
+                userData[key] = attr.value;
+                if (key === 'id') document.getElementById('edit-id').value = attr.value;
+            });
+            console.log(userData)
+
+            const isSelf = parseInt(userData.id) === sessionUserId;
+
+            // First Name, Last Name, Email
+            modalBody.innerHTML += `
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" name="first_name" value="${userData.first_name}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="last_name" value="${userData.last_name}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="${userData.email}" required>
+        </div>`;
+
+            // Role Selector
+            let roleField = '';
+            if ((sessionRole === 1 && isSelf) || (sessionRole === 2 && isSelf)) {
+                // Super Admin or Admin editing themselves
+                const roleName = sessionRole == 1 ? 'Super Admin' : (sessionRole == 2 ? 'Admin' : 'User');
+                roleField = `
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <input type="text" class="form-control" value="${roleName}" disabled>
+                <input type="hidden" name="role_id" value="${sessionRole}">
+            </div>`;
+            } else {
+                // Super Admin editing someone else or Admin editing a user
+                const options = sessionRole == 1
+                    ? `<option value="2" ${userData.role_id == 2 ? 'selected' : ''}>Admin</option>
+                   <option value="3" ${userData.role_id == 3 ? 'selected' : ''}>User</option>`
+                    : `<option value="3" selected>User</option>`;
+
+                roleField = `
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select" name="role_id" required>
+                    ${options}
+                </select>
+            </div>`;
             }
 
-            if (['created_at', 'last_edited_at', 'user_role','email'].includes(key)) continue;
+            modalBody.innerHTML += roleField;
 
-            const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            // Profile image input
+            modalBody.innerHTML += `
+        <div class="mb-3">
+            <label class="form-label">Profile Image</label>
+            <input type="file" class="form-control" name="profile_image" accept="image/*">
+        </div>`;
+        }
 
-            if (key === 'genres') {
-                selectedGenres = value.split(',').map(g => g.trim());
+        // MOVIES
+        else if (page === 'movies.php') {
+            let movieData = {};
+            dataAttrs.forEach(attr => {
+                const key = attr.name.replace('data-', '');
+                movieData[key] = attr.value;
+                if (key === 'id') document.getElementById('edit-id').value = attr.value;
+            });
 
-                modalBody.innerHTML += `
-                    <div class="mb-3">
-                        <label class="form-label">${label}</label>
-                        <div id="genre-container" class="d-flex flex-wrap gap-2 mb-2"></div>
-                        <select id="genre-select" class="form-select">
-                            <option value="">Select Genre</option>
-                            ${allGenres.map(g => `<option value="${g.id}">${g.name}</option>`).join('')}
-                        </select>
-                    </div>`;
+            modalBody.innerHTML += `
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" value="${movieData.name}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" required>${movieData.description}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Release Date</label>
+            <input type="number" class="form-control" name="release_date" value="${movieData.release_date}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input type="text" class="form-control" name="image_url" value="${movieData.image_url}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Genres</label>
+            <div id="genre-container" class="d-flex flex-wrap gap-2 mb-2"></div>
+            <select id="genre-select" class="form-select">
+                <option value="">Select Genre</option>
+                ${allGenres.map(g => `<option value="${g.id}">${g.name}</option>`).join('')}
+            </select>
+        </div>`;
 
+            if (movieData.genres) {
+                selectedGenres = movieData.genres.split(',').map(g => g.trim());
                 setTimeout(() => {
                     selectedGenres.forEach(g => {
                         const matched = allGenres.find(genre => genre.name === g);
                         if (matched) addGenreTag(matched.id, matched.name);
                     });
                 }, 0);
-            } else {
-                const inputType = key === 'email' ? 'email' : 'text';
-                modalBody.innerHTML += `
-                <div class="mb-3">
-                    <label class="form-label">${label}</label>
-                    <input type="${inputType}" class="form-control" name="${key}" value="${value}">
-                </div>`;
             }
         }
-                $('#editModalLabel').text(isAddMode ? 'Add Record' : 'Edit Record');
-$('#modal-submit-btn').text(isAddMode ? 'Add Record' : 'Save Changes');
+
+        // GENRES
+        else if (page === 'genres.php') {
+            dataAttrs.forEach(attr => {
+                const key = attr.name.replace('data-', '');
+                if (key === 'id') {
+                    document.getElementById('edit-id').value = attr.value;
+                    return;
+                }
+                const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                modalBody.innerHTML += `
+            <div class="mb-3">
+                <label class="form-label">${label}</label>
+                <input type="text" class="form-control" name="${key}" value="${attr.value}" required>
+            </div>`;
+            });
+        }
+
+        $('#editModalLabel').text('Edit Record');
+        $('#modal-submit-btn').text('Save Changes');
         editModal.show();
     });
+
 
     // Genre tag logic
     $(document).on('change', '#genre-select', function () {
@@ -231,4 +323,26 @@ $('#modal-submit-btn').text(isAddMode ? 'Add Record' : 'Save Changes');
 
     // Initial table load
     loadTables();
+
+    function addSentimentFilter() {
+        const sentimentFilter = `
+        <label class="ms-2">
+            Filter by Sentiment: 
+            <select id="sentimentFilter" class="form-select form-select-sm d-inline w-auto ms-2">
+                <option value="">All</option>
+                <option value="Positive">Positive</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Negative">Negative</option>
+            </select>
+        </label>`;
+        $('#table_filter').append(sentimentFilter);
+
+        $('#sentimentFilter').on('change', function () {
+            $('#table').DataTable().column(8).search(this.value).draw(); // adjust index if needed
+        });
+    }
+    const page = $("#currentPage").val();
+    if (page === "reviews.php") {
+        setTimeout(addSentimentFilter, 500); // wait for table to render
+    }
 });

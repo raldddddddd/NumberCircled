@@ -17,6 +17,11 @@ class Table
                 r.comment,
                 r.rating,
                 r.score,
+                CASE 
+                WHEN r.score > 0.5 THEN 'Positive'
+                WHEN r.score = 0.5 THEN 'Neutral'
+                ELSE 'Negative'
+            END AS sentiment,
                 r.created_at,
                 r.last_edited_at
             FROM reviews AS r
@@ -190,13 +195,21 @@ class Table
         return $result;
     }
 
-    function updateUser($id, $data)
+    function updateUser($id, $data, $profileImageData = null)
     {
         global $conn;
-        $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?");
-        $stmt->bind_param("sssi", $data['first_name'], $data['last_name'], $data['email'], $id);
+
+        if ($profileImageData !== null) {
+            $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, role_id = ?, profile_image = ?, last_edited_at = NOW() WHERE id = ?");
+            $stmt->bind_param("sssisi", $data['first_name'], $data['last_name'], $data['email'], $data['role_id'], $profileImageData, $id);
+        } else {
+            $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, role_id = ?, last_edited_at = NOW() WHERE id = ?");
+            $stmt->bind_param("sssii", $data['first_name'], $data['last_name'], $data['email'], $data['role_id'], $id);
+        }
+
         return $stmt->execute();
     }
+
 
     function updateMovie($id, $data)
     {

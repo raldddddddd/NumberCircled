@@ -151,40 +151,40 @@ $(document).ready(function () {
 
     
     //Review
-    $.ajax({
-        url: "/NumberCircled/app/controller/fetch/review_fetch.php",
-        method: "GET",
-        data: {movie: $("#movie_id").attr('value')},
-        dataType: "json",
-        success: function(data){
-            console.log(data);
-            $.each(data.movie['0'], function(key, value) {
-                if(key == "release_date"){
-                    $("[name='release_date']").text(value.split("-")[0])
-                } else if(key == "image_url"){
-                    $("[name='image_url']").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
-                } else {
-                    $(`[name='${key}']`).text(value);
-                }
-            });
+    // $.ajax({
+    //     url: "/NumberCircled/app/controller/fetch/review_fetch.php",
+    //     method: "GET",
+    //     data: {movie: $("#movie_id").attr('value')},
+    //     dataType: "json",
+    //     success: function(data){
+    //         console.log(data);
+    //         $.each(data.movie['0'], function(key, value) {
+    //             if(key == "release_date"){
+    //                 $("[name='release_date']").text(value.split("-")[0])
+    //             } else if(key == "image_url"){
+    //                 $("[name='image_url']").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+    //             } else {
+    //                 $(`[name='${key}']`).text(value);
+    //             }
+    //         });
 
-            $.each(data.review_detail['0'], function(key, value) {
-                $(`[name='${key}']`).text(value);
+    //         $.each(data.review_detail['0'], function(key, value) {
+    //             $(`[name='${key}']`).text(value);
 
-            });
+    //         });
 
-            var genres = "";
-            for(var num in data.genre){
-                genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
-            }
-            $(".genre-list").append(genres);
+    //         var genres = "";
+    //         for(var num in data.genre){
+    //             genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
+    //         }
+    //         $(".genre-list").append(genres);
 
 
-        },
-        error: function () {
-            alert('Failed to fetch movie review data.');
-        }
-    });
+    //     },
+    //     error: function () {
+    //         alert('Failed to fetch movie review data.');
+    //     }
+    // });
     
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {

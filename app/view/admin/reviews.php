@@ -49,6 +49,7 @@ $profile_image = $_SESSION['profile_image'];
                                         <th>Comment</th>
                                         <th>Rating</th>
                                         <th>Score</th>
+                                        <th>Sentiment</th>
                                         <th>Created At</th>
                                         <th>Edited At</th>
                                         <th>Actions</th>

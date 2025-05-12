@@ -16,7 +16,7 @@ switch ($page) {
         if (empty($_POST['id'])) {
             $result = $tableModel->addUser($_POST['role_id'], $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $profileImageData);
         } else {
-            $result = $tableModel->updateUser($_POST['id'], $_POST);
+            $result = $tableModel->updateUser($_POST['id'], $_POST, $profileImageData);
         }
         break;
 
