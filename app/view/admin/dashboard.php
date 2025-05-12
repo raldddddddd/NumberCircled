@@ -43,7 +43,7 @@ $profile_image = $_SESSION['profile_image'];
 
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <div class="card text-white bg-primary mb-3 rounded shadow-sm">
+                        <div class="card text-white mb-3 rounded shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">Total Users</h5>
                                 <p class="card-text" id="totalUsers"></p>
@@ -51,7 +51,15 @@ $profile_image = $_SESSION['profile_image'];
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-danger mb-3 rounded shadow-sm">
+                        <div class="card text-white mb-3 rounded shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Movies</h5>
+                                <p class="card-text" id="totalMovies"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white mb-3 rounded shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">Total Reviews</h5>
                                 <p class="card-text" id="totalReviews"></p>
@@ -80,25 +88,22 @@ $profile_image = $_SESSION['profile_image'];
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="p-3 bg-light rounded shadow-sm">
-                            <h3>Trending Movies</h3>
-                            <table id="trending-movies" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Movie</th>
-                                        <th>Recent Reviews</th>
-                                        <th>Rating</th>
-                                        <th>Sentiment</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                <!-- <div id="trending-movie-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <?php foreach ($data['trendingMovies'] as $movie): ?>
+                        <div class="bg-white p-4 rounded-xl shadow">
+                            <h3 class="text-xl font-semibold mb-2"><?= htmlspecialchars($movie['name']) ?></h3>
+                            <p><strong>Recent Reviews:</strong> <?= $movie['recent_reviews'] ?></p>
+                            <p><strong>Recent Rating:</strong> <?= $movie['recent_rating'] ?>/5</p>
+                            <p><strong>Overall Rating:</strong> <?= $movie['overall_rating'] ?>/5</p>
+                            <p><strong>Change:</strong>
+                                <span class="<?= $movie['rating_diff'] > 0 ? 'text-green-600' : ($movie['rating_diff'] < 0 ? 'text-red-600' : '') ?>">
+                                    <?= $movie['rating_diff'] >= 0 ? '+' : '' ?><?= $movie['rating_diff'] ?>
+                                </span>
+                            </p>
+                            <canvas id="sentimentChart_<?= $movie['id'] ?>" height="150"></canvas>
                         </div>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                </div> -->
 
                 <div class="mb-4 mt-5">
                     <div class="bg-light rounded shadow-sm p-3">
@@ -121,6 +126,7 @@ $profile_image = $_SESSION['profile_image'];
         </div>
     </div>
 
+        <?php include("modalsemantics.php"); ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -128,83 +134,64 @@ $profile_image = $_SESSION['profile_image'];
     <script src="../../../script/script.js"></script>
     <script>
         $.ajax({
-        url: '/NumberCircled/app/controller/dashboard-data.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            $('#totalUsers').text(data.totalUsers);
-            $('#totalReviews').text(data.totalReviews);
+            url: '/NumberCircled/app/controller/dashboard-data.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('#totalUsers').text(data.totalUsers);
+                $('#totalMovies').text(data.totalMovies);
+                $('#totalReviews').text(data.totalReviews);
 
-            const sentimentChart = new Chart(document.getElementById('sentimentChart'), {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(data.sentimentDistribution),
-                    datasets: [{
-                        data: Object.values(data.sentimentDistribution),
-                        backgroundColor: ['#4CAF50', '#F44336', '#FFC107']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
+                const chartData = data.sentimentDistribution;
+                const sentimentChart = new Chart(document.getElementById('sentimentChart'), {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(chartData),
+                        datasets: [{
+                            data: Object.values(chartData),
+                            backgroundColor: ['#4CAF50', '#F44336', '#FFC107']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+
+
+                $('#positive-words-list').empty();
+                data.positiveWords.forEach(word => {
+                    $('#positive-words-list').append(`<span class="badge bg-success">${word.word} ${word.frequency}</span>`);
+                });
+
+                $('#negative-words-list').empty();
+                data.negativeWords.forEach(word => {
+                    $('#negative-words-list').append(`<span class="badge bg-danger">${word.word} ${word.frequency}</span>`);
+                });
+
+                if ($.fn.DataTable.isDataTable('#recentActivitiesTable')) {
+                    $('#recentActivitiesTable').DataTable().clear().destroy();
                 }
-            });
-
-            $('#positive-words-list').empty();
-            data.positiveWords.forEach(word => {
-                $('#positive-words-list').append(`<span class="badge bg-success">${word.word} ${word.frequency}</span>`);
-            });
-
-            $('#negative-words-list').empty();
-            data.negativeWords.forEach(word => {
-                $('#negative-words-list').append(`<span class="badge bg-danger">${word.word} ${word.frequency}</span>`);
-            });
-
-            // Destroy if already initialized
-            if ($.fn.DataTable.isDataTable('#trending-movies')) {
-                $('#trending-movies').DataTable().clear().destroy();
-            }
-            if ($.fn.DataTable.isDataTable('#recentActivitiesTable')) {
-                $('#recentActivitiesTable').DataTable().clear().destroy();
-            }
-
-            $('#trending-movies tbody').empty();
-            data.trendingMovies.forEach(movie => {
-                $('#trending-movies tbody').append(`
-                    <tr>
-                        <td>${movie.name}</td>
-                        <td>${movie.recent_reviews}</td>
-                        <td>${movie.avg_rating}</td>
-                        <td>${movie.latest_sentiment}</td>
-                    </tr>
-                `);
-            });
-
-            $('#recentActivitiesTable tbody').empty();
-            data.recentActivities.forEach(activity => {
-                $('#recentActivitiesTable tbody').append(`
+                
+                $('#recentActivitiesTable tbody').empty();
+                data.recentActivities.forEach(activity => {
+                    $('#recentActivitiesTable tbody').append(`
                     <tr>
                         <td>${activity.activity}</td>
                         <td>${activity.date}</td>
                     </tr>
                 `);
-            });
+                });
 
-            $('#trending-movies').DataTable({
-                order: [
-                    [1, 'desc']
-                ]
-            });
-
-            $('#recentActivitiesTable').DataTable({
-                order: [
-                    [1, 'desc']
-                ]
-            });
-        },
-        error: function() {
-            alert('Failed to fetch dashboard data.');
-        }
+                $('#recentActivitiesTable').DataTable({
+                    order: [
+                        [1, 'desc']
+                    ]
+                });
+            },
+            error: function() {
+                alert('Failed to fetch dashboard data.');
+            }
         });
     </script>
 </body>

@@ -12,7 +12,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     profile_image LONGBLOB,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE TABLE genres (
@@ -24,16 +24,17 @@ CREATE TABLE movies (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    release_date DATE NOT NULL,
+    release_date INT NOT NULL,
     image_url VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE movie_genres (
     movie_id INT NOT NULL,
     genre_id INT NOT NULL,
-    FOREIGN KEY (movie_id) REFERENCES movies(id),
-    FOREIGN KEY (genre_id) REFERENCES genres(id)
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
@@ -43,30 +44,38 @@ CREATE TABLE reviews (
     comment TEXT NOT NULL,
     rating DECIMAL(2,1) NOT NULL CHECK (rating IN (1.0, 2.0, 3.0, 4.0, 5.0)),
     score DECIMAL(5,4) NOT NULL,
-    sentiment_category VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (movie_id) REFERENCES movies(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE word_frequencies (
+CREATE TABLE words (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     word VARCHAR(100) NOT NULL,
     sentiment ENUM('positive', 'negative') NOT NULL,
-    frequency INT NOT NULL DEFAULT 0,
     UNIQUE(word, sentiment)
+);
+
+CREATE TABLE review_words (
+    review_id INT NOT NULL,
+    word_id INT NOT NULL,
+    frequency INT NOT NULL,
+    FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE,
+    FOREIGN KEY (word_id) REFERENCES words(id) ON DELETE CASCADE
 );
 
 CREATE TABLE activity_logs (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
     login_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-
 ALTER TABLE users ADD COLUMN last_edited_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE activity_logs ADD UNIQUE KEY unique_user_id (user_id);
+
+
 
 
 INSERT INTO roles(role) VALUES

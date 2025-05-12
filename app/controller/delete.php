@@ -1,19 +1,32 @@
 <?php
-require_once __DIR__ . "/../../config/database.php";
-require_once __DIR__ . "/../model/Users.php";
+require_once __DIR__ . '/../model/Table.php';
 
-$user = new Users();
 $id = $_POST['id'] ?? null;
+$page = $_POST['page'] ?? '';
 
-
-if($id){
-    $query = $user->deleteUser($id);
-} 
-
-if ($conn->query($query)) {
-    echo "Arigato Jamal";
-} else {
-    echo "Error: " . $conn->error;
+if (!$id || !$page) {
+    echo "Missing ID or page parameter";
+    exit;
 }
 
-?>
+$tableModel = new Table();
+
+switch ($page) {
+    case 'reviews.php':
+        $result = $tableModel->deleteReview($id);
+        break;
+    case 'users.php':
+        $result = $tableModel->deleteUser($id);
+        break;
+    case 'movies.php':
+        $result = $tableModel->deleteMovie($id);
+        break;
+    case 'genres.php':
+        $result = $tableModel->deleteGenre($id);
+        break;
+    default:
+        echo "Invalid page parameter";
+        exit;
+}
+
+echo $result ? "Record deleted successfully." : "Failed to delete record.";

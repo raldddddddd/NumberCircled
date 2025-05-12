@@ -49,7 +49,6 @@ $profile_image = $_SESSION['profile_image'];
                                         <th>Comment</th>
                                         <th>Rating</th>
                                         <th>Score</th>
-                                        <th>Sentiment Category</th>
                                         <th>Created At</th>
                                         <th>Edited At</th>
                                         <th>Actions</th>
@@ -65,12 +64,13 @@ $profile_image = $_SESSION['profile_image'];
             </main>
         </div>
     </div>
-
+    <?php include("modal.php"); ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../../../script/script.js"></script>
+    <script src="../../../script/scriptTables.js"></script>
 </body>
 
 </html>
