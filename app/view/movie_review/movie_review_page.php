@@ -54,6 +54,7 @@
     <!-- Main Content that overlaps with hero -->
     <input type="hidden" name="movie_id" id="movie_id" value=<?php echo $_SESSION['movie_id'];?>>
     <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'];?>>
+    <input type="hidden" name="existing_review" id="existing_review" value=<?php echo $_SESSION['existing_review'];?>>
     <div class="container content-wrapper">
         <div class="row">
             <!-- Left Column - Movie Poster -->
@@ -142,64 +143,12 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="text-muted-custom">Reviews</h5>
                     <button class="btn btn-outline-light" id="addReviewBtn">
-                        <i class="fas fa-plus me-2"></i>Add Your Review
+                        <i class="fas fa-plus me-2"></i><span id="reviewBtn">Add Your Review</span>
                     </button>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-4 review-loader">
                     <!-- Review Card (Example) -->
-                    <div class="col-md-6">
-                        <div class="review-box p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <strong>Aniket Roy</strong>
-                                    <div class="text-muted-custom">From India</div>
-                                </div>
-                                <div class="rating-stars d-flex align-items-center">
-                                    <span class="text-warning me-2">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                    </span>
-                                    <span class="badge bg-dark-subtle text-white">4.5</span>
-                                </div>
-                            </div>
-                            <p class="mb-0">
-                                This movie was recommended to me by a very dear friend who went for the movie by herself. I went to the cinemas to watch but had a housefull board so couldn't watch it.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Repeat the above .col-md-6 block for each review -->
-                    <!-- Example Sworaj Review -->
-                    <div class="col-md-6">
-                        <div class="review-box p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <strong>Swaraj</strong>
-                                    <div class="text-muted-custom">From India</div>
-                                </div>
-                                <div class="rating-stars d-flex align-items-center">
-                                    <span class="text-warning me-2">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                    </span>
-                                    <span class="badge bg-dark-subtle text-white">5</span>
-                                </div>
-                            </div>
-                            <p class="mb-0">
-                                A restless king promises his lands to the local tribals in exchange of a stone (Panjurli, a deity of Keraldi Village) wherein he finds solace and peace of mind.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
-                    <button class="btn btn-dark rounded-circle">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="btn btn-dark rounded-circle">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -214,7 +163,7 @@
         <div class="modal-body">
             <div class="modal-poster"></div>
             <div class="details">
-                <h3>Spider-Man: Into the Spider Verse <span class="year">2022</span></h3>
+                <h3><span class='modal-title'>Spider-Man: Into the Spider Verse</span> <span class="year modal-year">2022</span></h3>
                 <form id="reviewForm">
                     <textarea placeholder="Add a review..." id="textReview" rows="8"></textarea>
 
@@ -234,6 +183,7 @@
 
         <div class="modal-footer">
             <button class="save-button" id="saveReviewBtn">Save</button>
+            <button class="save-button" id="deleteReviewBtn" hidden>Delete</button>
         </div>
     </div>
 

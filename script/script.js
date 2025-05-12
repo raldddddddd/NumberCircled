@@ -67,40 +67,39 @@ $(document).ready(function () {
 
     });
 
-    // $("#userForm").submit(function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "/NumberCircled/app/controller/addUser_process.php",
-    //         type: "POST",
-    //         data: $(this).serialize(),
-    //         dataType: "text",
-    //         success: function (response) {
-    //             if (response == "Arigato Jamal") {
-    //                 alert("User goods");
-    //                 $("id").val("");
-    //                 loadTables();
-    //             } else {
-    //                 alert(response);
-    //             }
-    //         },
-    //         error: function (error) {
-    //             alert("Error" + error);
-    //         }
-    //     });
-    //     $("#userForm")[0].reset();
-    // });
 
-    $("#saveReviewBtn").click(function(){
-        alert($("input[name='rating']:checked").val());
-        alert($("#movie_id").val());
-        alert($("#user_id").val());
+    $("#deleteReviewBtn").click(function(e){
+        e.preventDefault();
+        var rating = $('input[name="rating"]:checked').val();
+        var review = $('#textReview').val().trim();
+
+        $.ajax({
+            url: "/NumberCircled/app/controller/review_process.php",
+            method: "POST",
+            data: {
+                mode: '3',
+                rating: $("input[name='rating']:checked").val(),
+                comment: $("#textReview").val(),
+                movie_id: $("#movie_id").val(),
+                user_id: $("#user_id").val()
+            },
+            success: function(data){
+                alert(data);
+                location.href = '/NumberCircled/app/view/movie_review/movie_review_page.php';
+            },
+            error: function () {
+                alert('Failed to delete movie review data.');
+            }
+        });
+    
+        $('#reviewModal').fadeOut();
+        $('#reviewForm')[0].reset();
     });
 
     $('#saveReviewBtn').click(function(e){
         e.preventDefault();
         var rating = $('input[name="rating"]:checked').val();
         var review = $('#textReview').val().trim();
-    
         if (!rating || review === '') {
             alert('Please select a rating and write a review.');
             return;
@@ -109,12 +108,15 @@ $(document).ready(function () {
             url: "/NumberCircled/app/controller/review_process.php",
             method: "POST",
             data: {
+                mode: $("#existing_review").val(),
                 rating: $("input[name='rating']:checked").val(),
+                comment: $("#textReview").val(),
                 movie_id: $("#movie_id").val(),
                 user_id: $("#user_id").val()
             },
             success: function(data){
-                alert("wow");
+                alert(data);
+                location.href = '/NumberCircled/app/view/movie_review/movie_review_page.php';
             },
             error: function () {
                 alert('Failed to update movie review data.');
@@ -148,45 +150,82 @@ $(document).ready(function () {
             $("#adminOpt").remove();
         }
     }
-
-    
-    //Review
-    // $.ajax({
-    //     url: "/NumberCircled/app/controller/fetch/review_fetch.php",
-    //     method: "GET",
-    //     data: {movie: $("#movie_id").attr('value')},
-    //     dataType: "json",
-    //     success: function(data){
-    //         console.log(data);
-    //         $.each(data.movie['0'], function(key, value) {
-    //             if(key == "release_date"){
-    //                 $("[name='release_date']").text(value.split("-")[0])
-    //             } else if(key == "image_url"){
-    //                 $("[name='image_url']").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
-    //             } else {
-    //                 $(`[name='${key}']`).text(value);
-    //             }
-    //         });
-
-    //         $.each(data.review_detail['0'], function(key, value) {
-    //             $(`[name='${key}']`).text(value);
-
-    //         });
-
-    //         var genres = "";
-    //         for(var num in data.genre){
-    //             genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
-    //         }
-    //         $(".genre-list").append(genres);
-
-
-    //     },
-    //     error: function () {
-    //         alert('Failed to fetch movie review data.');
-    //     }
-    // });
     
     function mainloadTables() {
+        //Review
+        $.ajax({
+        url: "/NumberCircled/app/controller/fetch/review_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        dataType: "json",
+        success: function(data){
+            var genres = "";
+            $.each(data.movie['0'], function(key, value) {
+                if(key == "release_date"){
+                    $("[name='release_date']").text(value.split("-")[0])
+                } else if(key == "image_url"){
+                    $("[name='image_url']").css("background",`url(${value})no-repeat center`);
+                    $(".modal-poster").css("background",`url(${value})no-repeat center`);
+                    $(".hero-section").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+                } else {
+                    $(`[name='${key}']`).text(value);
+                }
+            });
+
+            $.each(data.review_detail['0'], function(key, value) {
+                $(`[name='${key}']`).text(value);
+
+            });
+
+            for(var num in data.genre){
+                genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
+            }
+
+            
+            if($("#existing_review").val() == 1){
+                $("#reviewBtn").text("Update Your Review");
+                $('#deleteReviewBtn').removeAttr('hidden');
+            }
+
+
+            $(".genre-list").append(genres);
+            $(".modal-title").text(data.movie['0']['name']);
+            $(".modal-year").text(data.movie['0']['release_date']);
+            
+
+        },
+        error: function () {
+            alert('Failed to fetch movie review data.');
+        }
+    });
+
+    //User Review List
+    $.ajax({
+        url: "/NumberCircled/app/controller/fetch/reviewList_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        success: function(data){
+            $(".review-loader").html(data);
+        },
+        error: function(){
+            alert("Failed to load USER reviews");
+        }
+    });
+
+    //User Review List
+    $.ajax({
+        url: "/NumberCircled/app/controller/fetch/reviewList_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        success: function(data){
+            $(".review-loader").html(data);
+        },
+        error: function(){
+            alert("Failed to load USER reviews");
+        }
+    });
+
+
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);
         });
