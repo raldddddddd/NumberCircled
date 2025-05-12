@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($user['profile_image'])) {
             $_SESSION['profile_image'] = 'data:image/jpeg;base64,' . base64_encode($user['profile_image']);
         } else {
-            $_SESSION['profile_image'] = 'default-image-path.jpg'; // fallback if needed
+            $_SESSION['profile_image'] = '/NumberCircled/assets/default-profile.jpeg';
+
         }
         echo $user['role_id'];
     } else {

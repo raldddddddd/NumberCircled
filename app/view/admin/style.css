@@ -81,3 +81,11 @@ main {
     width: 1em;
     margin-left: -1em;
 }
+
+thead {
+    background-color: #b91c1c;
+}
+
+th {
+    color: white;
+}

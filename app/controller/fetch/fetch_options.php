@@ -7,11 +7,11 @@ $type = $_GET['type'] ?? '';
 $model = new Table();
 
 switch ($type) {
-    // case 'roles':
-    //     $data = $model->getRoles();
-    //     break;
     case 'genres':
         $data = $model->getGenres();
+        break;
+    case 'movies':
+        $data = $model->getMovies();
         break;
     default:
         echo json_encode([]);

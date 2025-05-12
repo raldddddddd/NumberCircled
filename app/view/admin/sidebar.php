@@ -3,6 +3,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 $is_movies_section = in_array($current_page, ['movies.php', 'genres.php']);
 ?>
 <input type="hidden" id="sessionRole" value="<?= $_SESSION['role_id'] ?>">
+<input type="hidden" id="sessionUserId" value="<?= $_SESSION['user_id'] ?>">
 <input type="hidden" id="currentPage" value="<?= htmlspecialchars($current_page) ?>">
 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark text-white position-fixed start-0 vh-100 overflow-auto p-0">
 
@@ -43,9 +44,6 @@ $is_movies_section = in_array($current_page, ['movies.php', 'genres.php']);
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="/NumberCircled/app/controller/export.php"><i class="fas fa-file-csv"></i> Export Data</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="report.html"><i class="fas fa-chart-line"></i> Trend Report</a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex px-2 py-2 align-items-center rounded text-white mx-2" href="#" id="editSemanticsBtn">

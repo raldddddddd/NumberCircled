@@ -67,28 +67,6 @@ $(document).ready(function () {
 
     });
 
-    // $("#userForm").submit(function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "/NumberCircled/app/controller/addUser_process.php",
-    //         type: "POST",
-    //         data: $(this).serialize(),
-    //         dataType: "text",
-    //         success: function (response) {
-    //             if (response == "Arigato Jamal") {
-    //                 alert("User goods");
-    //                 $("id").val("");
-    //                 loadTables();
-    //             } else {
-    //                 alert(response);
-    //             }
-    //         },
-    //         error: function (error) {
-    //             alert("Error" + error);
-    //         }
-    //     });
-    //     $("#userForm")[0].reset();
-    // });
 
     $("#deleteReviewBtn").click(function(e){
         e.preventDefault();
@@ -172,10 +150,6 @@ $(document).ready(function () {
             $("#adminOpt").remove();
         }
     }
-
-    
-    
-    
     
     function mainloadTables() {
         //Review
@@ -237,6 +211,20 @@ $(document).ready(function () {
             alert("Failed to load USER reviews");
         }
     });
+
+    //User Review List
+    $.ajax({
+        url: "/NumberCircled/app/controller/fetch/reviewList_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        success: function(data){
+            $(".review-loader").html(data);
+        },
+        error: function(){
+            alert("Failed to load USER reviews");
+        }
+    });
+
 
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);

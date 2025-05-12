@@ -38,7 +38,7 @@ $profile_image = $_SESSION['profile_image'];
                     <div class="col-md-12">
                         <div class="p-3 bg-light rounded shadow-sm">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h3 class="mb-0">Genres</h3>
+                                <h3 class="mb-0">Users & Admins</h3>
                                 <button class="btn btn-primary addBtn" id="addBtn">Add New</button>
                             </div>
                             <table id="table" class="table table-striped">
