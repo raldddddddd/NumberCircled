@@ -9,10 +9,11 @@ $response = [
     "totalUsers" => $model->getTotalUsers(),
     "totalMovies" => $model->getTotalMovies(),
     "totalReviews" => $model->getTotalReviews(),
+    "totalGenres" => $model->getTotalGenres(),
     "sentimentDistribution" => $model->getSentimentCounts(),
     "positiveWords" => $model->getTopWords('positive'),
     "negativeWords" => $model->getTopWords('negative'),
-    // "trendingMovies" => $model->getTrendingMovies(),
+    'reviewsPerProduct' => $model->getReviewCountsPerProduct(),
     "recentActivities" => $model->getRecentActivities(),
 ];
 

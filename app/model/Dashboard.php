@@ -27,6 +27,11 @@ class Dashboard
         $result = $this->conn->query("SELECT COUNT(*) as total FROM reviews");
         return $result->fetch_assoc()['total'] ?? 0;
     }
+    public function getTotalGenres()
+    {
+        $result = $this->conn->query("SELECT COUNT(*) as total FROM genres");
+        return $result->fetch_assoc()['total'] ?? 0;
+    }
 
     public function getSentimentCounts()
     {
@@ -65,84 +70,35 @@ class Dashboard
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTrendingMovies()
+    // Number of reviews per product
+    public function getReviewCountsPerProduct()
     {
-        $sql = "
-        SELECT 
-            m.id,
-            m.name,
-
-            -- Total number of recent reviews
-            (
-                SELECT COUNT(*) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id 
-                AND r.created_at >= NOW() - INTERVAL 7 DAY
-            ) AS recent_reviews,
-
-            -- Overall rating for this movie
-            (
-                SELECT ROUND(AVG(r.rating), 1) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id
-            ) AS overall_rating,
-
-            -- Rating in the last 7 days
-            (
-                SELECT ROUND(AVG(r.rating), 1) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id 
-                AND r.created_at >= NOW() - INTERVAL 7 DAY
-            ) AS recent_rating,
-
-            -- Rating difference
-            (
-                SELECT ROUND(
-                    IFNULL((
-                        SELECT AVG(r.rating) 
-                        FROM reviews r 
-                        WHERE r.movie_id = m.id 
-                        AND r.created_at >= NOW() - INTERVAL 7 DAY
-                    ), 0) 
-                    -
-                    IFNULL((
-                        SELECT AVG(r.rating) 
-                        FROM reviews r 
-                        WHERE r.movie_id = m.id
-                    ), 0)
-                , 1)
-            ) AS rating_diff,
-
-            -- Sentiment counts
-            (
-                SELECT COUNT(*) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id AND r.score > 0.05
-                AND r.created_at >= NOW() - INTERVAL 7 DAY
-            ) AS positive_count,
-
-            (
-                SELECT COUNT(*) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id AND r.score = 0.05
-                AND r.created_at >= NOW() - INTERVAL 7 DAY
-            ) AS neutral_count,
-
-            (
-                SELECT COUNT(*) 
-                FROM reviews r 
-                WHERE r.movie_id = m.id AND r.score < 0.05
-                AND r.created_at >= NOW() - INTERVAL 7 DAY
-            ) AS negative_count
-
-        FROM movies m
-        ORDER BY recent_reviews DESC
-        LIMIT 5
-    ";
-
+        $sql = "SELECT m.name, COUNT(r.id) AS review_count
+            FROM movies m
+            LEFT JOIN reviews r ON m.id = r.movie_id
+            GROUP BY m.id";
         return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Sentiment trend over time (grouped daily)
+    public function getSentimentTrend($movieId)
+    {
+        $sql = "SELECT 
+                    movie_id,
+                    DATE(created_at) AS date,
+                    SUM(CASE WHEN score > 0.05 THEN 1 ELSE 0 END) AS positive,
+                    SUM(CASE WHEN score = 0.05 THEN 1 ELSE 0 END) AS neutral,
+                    SUM(CASE WHEN score < 0.05 THEN 1 ELSE 0 END) AS negative
+                FROM reviews
+                GROUP BY movie_id, DATE(created_at)
+                ORDER BY date
+                ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $movieId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function getRecentActivities()
     {

@@ -114,6 +114,12 @@ class Table
         return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getMovies()
+    {
+        global $conn;
+        $sql = "SELECT id, name FROM movies ORDER BY name ASC";
+        return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+    }
 
     function getMovieById($id)
     {
@@ -215,5 +221,25 @@ class Table
         }
 
         return $result;
+    }
+
+    public function getSentimentTrend($movieId)
+    {
+        global $conn;
+        $stmt = $conn->prepare("
+        SELECT 
+            DATE(created_at) AS date,
+            SUM(CASE WHEN score > 0.05 THEN 1 ELSE 0 END) AS positive,
+            SUM(CASE WHEN score = 0.05 THEN 1 ELSE 0 END) AS neutral,
+            SUM(CASE WHEN score < 0.05 THEN 1 ELSE 0 END) AS negative
+        FROM reviews
+        WHERE movie_id = ?
+        GROUP BY DATE(created_at)
+        ORDER BY date ASC
+    ");
+        $stmt->bind_param("i", $movieId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
