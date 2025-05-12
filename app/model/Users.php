@@ -16,19 +16,12 @@ class Users
         return $query['name'];
     }
 
-    function updateUser($role_id, $fname, $lname, $email, $password, $id)
-    {
-        $hashedPassword = md5($password);
-        global $conn;
-        return $query = "UPDATE users SET role_id='$role_id', first_name='$fname', last_name='$lname', email='$email', password='$password' WHERE id='$id'";
-    }
-
-    function addUser($role_id, $first_name, $last_name, $email, $password)
-    {
-        $hashedPassword = md5($password);
-        global $conn;
-        return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
-    }
+    // function addUser($role_id, $first_name, $last_name, $email, $password)
+    // {
+    //     $hashedPassword = md5($password);
+    //     global $conn;
+    //     return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
+    // }
 
     function registerUser($first_name, $last_name, $email, $password)
     {
@@ -48,9 +41,22 @@ class Users
         return $result && $result->num_rows > 0;
     }
 
-    function deleteUser($id)
+    // function deleteUser($id)
+    // {
+    //     global $conn;
+    //     return $query = "DELETE FROM users WHERE id='$id'";
+    // }
+
+    public function logLoginActivity($user_id)
     {
         global $conn;
-        return $query = "DELETE FROM users WHERE id='$id'";
+
+        $stmt = $conn->prepare("
+        INSERT INTO activity_logs (user_id, login_time) 
+        VALUES (?, NOW()) 
+        ON DUPLICATE KEY UPDATE login_time = NOW()
+    ");
+        $stmt->bind_param("i", $user_id);
+        return $stmt->execute();
     }
 }

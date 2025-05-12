@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 main {
@@ -48,6 +48,7 @@ main {
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #b91c1c;
 }
 
 .card:hover {

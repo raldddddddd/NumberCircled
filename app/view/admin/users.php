@@ -34,16 +34,43 @@ $profile_image = $_SESSION['profile_image'];
         <div class="row flex-grow-1 pe-3 offset-lg-2 z-3">
 
             <main class="col-lg-12 px-4 pt-3 bg-white rounded shadow-sm overflow-auto">
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="p-3 bg-light rounded shadow-sm">
+                            <h3>Users</h3>
+                            <div class="mb-3">
+    <button class="btn btn-primary  addBtn" id="addBtn">Add New</button>
+</div>
+                            <table id="table" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Role</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Profile Image</th>
+                                        <th>Created At</th>
+                                        <th>Last Edited At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableLoad">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
-
+    <?php include("modal.php"); ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../../../script/script.js"></script>
+    <script src="../../../script/scriptTables.js"></script>
 </body>
 
 </html>
