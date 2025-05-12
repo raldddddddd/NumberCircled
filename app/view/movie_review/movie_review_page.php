@@ -130,7 +130,9 @@
                             
                         </div>
                     </div>
+                    
                 </div>
+                <a class="genre-pill" href="../main_page/main_page.html" id="go-back">Back to Main Page</a>
             </div>
         </div>
     </div>
@@ -146,7 +148,6 @@
                         <i class="fas fa-plus me-2"></i><span id="reviewBtn">Add Your Review</span>
                     </button>
                 </div>
-
                 <div class="row g-4 review-loader">
                     <!-- Review Card (Example) -->
             </div>
