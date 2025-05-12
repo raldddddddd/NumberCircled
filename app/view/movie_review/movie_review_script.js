@@ -13,7 +13,7 @@ $(document).ready(function(){
         $('#reviewModal').fadeOut();
         $('#reviewForm')[0].reset();
     });
-
+    /*
     $('#saveReviewBtn').click(function(e){
     e.preventDefault();
       var rating = $('input[name="rating"]:checked').val();
@@ -28,5 +28,6 @@ $(document).ready(function(){
       $('#reviewModal').fadeOut();
       $('#reviewForm')[0].reset();
     });
+    */
 
   });

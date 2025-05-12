@@ -22,7 +22,9 @@ while ($row = $result->fetch_assoc()) {
     }
 
     $output .= "<div class='text-center'>
-    <img src='{$row['image_url']}' class='movie-poster'/>
+    <a class='movie-link' href='/NumberCircled/app/controller/fetch/session_fetch.php?movie={$row['id']}'>
+    <img value='{$row['name']}' src='{$row['image_url']}' class='movie-poster' id='poster'/>
+    </a>
     <h6 class='mt-2 mb-1'>{$row['name']}</h6>
         <div class='d-flex justify-content-center align-items-center gap-3 rating-row'>
             <span><i class='fas fa-thumbs-up text-danger me-1'></i>{$row['sentiment_category']}</span>

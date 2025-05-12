@@ -8,12 +8,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../../script/script.js"></script>
     <script src="movie_review_script.js"></script>
     <link rel="stylesheet" href="movie_review_style.css" />
 
 
 </head>
-
+<?php session_start();?>
 <body>
     <!-- Navbar -->
     <nav class="navbar custom-navbar px-4 py-3">
@@ -49,14 +51,16 @@
     <div class="hero-section"></div>
 
     <!-- Main Content that overlaps with hero -->
+    <input type="hidden" name="movie_id" id="movie_id" value=<?php echo $_SESSION['movie_id'];?>>
+    <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'];?>>
     <div class="container content-wrapper">
         <div class="row">
             <!-- Left Column - Movie Poster -->
             <div class="col-md-5">
                 <div class="movie-card">
-                    <div class="img-fluid w-100 movie-card-poster"></div>
+                    <div class="img-fluid w-100 movie-card-poster" name="image_url"></div>
                     <div class="title-overlay">
-                        <h2 class="mb-1">Spider-man: Into the Spider Verse</h2>
+                        <h2 class="mb-1" name="name">Spider-man: Into the Spider Verse</h2>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-danger rounded-1 me-2 d-flex align-items-center px-3">
                                 <i class="fas fa-play me-2"></i> Play Now
@@ -80,7 +84,7 @@
                 <!-- Description Card -->
                 <div class="info-card mb-3">
                     <h6 class="section-title">Description</h6>
-                    <p class="section-content mb-0">
+                    <p class="section-content mb-0" name="description">
                         After reuniting with Gwen Stacy, Brooklyn's full-time, friendly
                         neighborhood Spider-Man is catapulted across the Multiverse,
                         where he encounters a team of Spider-People charged with
@@ -99,7 +103,7 @@
                             <i class="far fa-calendar-alt text-secondary me-2"></i>
                             <h6 class="section-title m-0">Released Year</h6>
                         </div>
-                        <p class="section-content mb-0">2022</p>
+                        <p class="section-content mb-0" name="release_date">2022</p>
                     </div>
 
                     <!-- Ratings Section -->
@@ -109,7 +113,7 @@
                             <h6 class="section-title m-0">Ratings</h6>
                         </div>
                         <div class="d-flex">
-                            <p class="section-content mb-0"><i class="fas fa-thumbs-up me-2"></i>Mostly Positive</p>
+                            <p class="section-content mb-0"><i class="fas fa-thumbs-up me-2"></i><span name="sentiment_category"></span></p>
                         </div>
                     </div>
 
@@ -119,9 +123,9 @@
                             <i class="fas fa-film text-secondary me-2"></i>
                             <h6 class="section-title m-0">Genres</h6>
                         </div>
-                        <div>
-                            <span class="genre-pill">Action</span>
-                            <span class="genre-pill">Adventure</span>
+                        <div class="genre-list">
+                            <!-- genres <span class="genre-pill">Action</span> -->
+                            
                         </div>
                     </div>
                 </div>
