@@ -26,12 +26,12 @@ class Movies
     function getReviewDetail($id)
     {
         $query = "
-        SELECT 
+        SELECT rating,
             CASE 
-                WHEN score > 0.5 THEN 'positive'
-                WHEN score = 0.5 THEN 'neutral'
+                WHEN score > 0.5 THEN 'Positive'
+                WHEN score = 0.5 THEN 'Neutral'
                 ELSE 'negative'
-            END AS sentiment
+            END AS sentiment_category
         FROM reviews
         WHERE movie_id = '$id'
     ";

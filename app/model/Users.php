@@ -9,19 +9,13 @@ class Users
         return $query = "SELECT * FROM users WHERE email='$input_username'";
     }
 
+
     function getRole($name)
     {
         global $conn;
         $query = $conn->query("SELECT * FROM users WHERE name='$name'");
         return $query['name'];
     }
-
-    // function addUser($role_id, $first_name, $last_name, $email, $password)
-    // {
-    //     $hashedPassword = md5($password);
-    //     global $conn;
-    //     return $query = "INSERT INTO users (role_id, first_name, last_name, email, password) VALUES ('$role_id', '$first_name', '$last_name', '$email', '$hashedPassword')";
-    // }
 
     function registerUser($first_name, $last_name, $email, $password)
     {
@@ -41,11 +35,123 @@ class Users
         return $result && $result->num_rows > 0;
     }
 
+    function addUserReview($rating, $movie_id, $user_id, $comment){
+        global $conn;
+        $query = "INSERT INTO reviews (movie_id, user_id, comment, rating, score) VALUES
+                    ($movie_id, $user_id, '$comment', $rating, 1.0)";
+        return $conn->query($query);
+    }
+
+    function checkExisting($user_id, $movie_id){
+        global $conn;
+        $query = "SELECT * FROM reviews WHERE user_id='$user_id' AND movie_id='$movie_id'";
+        $result = $conn->query($query);
+        return $result->num_rows;
+    }
+
+    function getExisting($user_id, $movie_id){
+        global $conn;
+        $query = "SELECT * FROM reviews WHERE user_id='$user_id' AND movie_id='$movie_id'";
+        $result = $conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function updateExisting($user_id, $movie_id, $comment, $rating){
+        global $conn;
+        $query = "UPDATE reviews SET comment='$comment', rating='$rating', score='1.0'
+                WHERE user_id = '$user_id' AND movie_id = '$movie_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function deleteExisting($user_id, $movie_id){
+        global $conn;
+        $query = "DELETE FROM reviews WHERE user_id = '$user_id' AND movie_id = '$movie_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function getReviewList($movie_id){
+        global $conn;
+        $query = "SELECT u.first_name, u.last_name, r.comment, r.rating FROM reviews as r
+                    INNER JOIN users as u ON r.user_id = u.id
+                    WHERE r.movie_id='$movie_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
+
     // function deleteUser($id)
     // {
     //     global $conn;
     //     return $query = "DELETE FROM users WHERE id='$id'";
     // }
+
+    function checkExistingWord($word){
+        global $conn;
+        $query = "SELECT * FROM words WHERE word='$word'";
+        $result = $conn->query($query);
+        return $result->num_rows >= 1;
+    }
+
+    function checkExistingReviewWord($review_id, $word_id){
+        global $conn;
+        $query = "SELECT * FROM review_words WHERE word_id='$word_id' AND review_id='$review_id'";
+        $result = $conn->query($query);
+        return $result->num_rows >= 1;
+    }
+    
+
+    function addWord($word, $sentiment){
+        global $conn;
+        $query = "INSERT INTO words(word, sentiment) VALUES('$word', '$sentiment')";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function addReviewWord($review_id, $word_id){
+        global $conn;
+        $query = "INSERT INTO review_words (review_id, word_id, frequency) VALUES('$review_id', '$word_id', 1)";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function updateReviewWord($word_id, $review_id){
+        global $conn;
+        $query = "UPDATE review_words SET frequency = frequency + 1 WHERE word_id='$word_id' AND review_id='$review_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function updateReviewScore($user_id, $movie_id,$score){
+        global $conn;
+        $query = "UPDATE reviews SET score='$score' WHERE user_id='$user_id' AND movie_id='$movie_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
+
+    function getReviewID($user_id, $movie_id)
+    {
+        global $conn;
+        $query = "SELECT id FROM reviews WHERE user_id='$user_id' AND movie_id='$movie_id'";
+        $result = $conn->query($query);
+        $row = $result->fetch_assoc();
+        return $row['id'];
+    }
+
+    function getWordID($word){
+        global $conn;
+        $query = "SELECT id FROM words WHERE word='$word'";
+        $result = $conn->query($query);
+        $row = $result->fetch_assoc();
+        return $row['id'];
+    }
+
+    function deleteReviewWord($review_id){
+        global $conn;
+        $query="DELETE FROM review_words WHERE review_id='$review_id'";
+        $result = $conn->query($query);
+        return $result;
+    }
 
     public function logLoginActivity($user_id)
     {

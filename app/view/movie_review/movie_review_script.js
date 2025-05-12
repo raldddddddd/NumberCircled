@@ -6,28 +6,21 @@ $(document).ready(function(){
           'left': '50%',
           'transform': 'translate(-50%, -50%)'
         }).fadeIn();
-      });
+        if($("#existing_review").val() == 1){
+          $.post("/NumberCircled/app/controller/fetch/existReview_fetch.php", {
+            movie_id: $("#movie_id").val(),
+            user_id: $("#user_id").val()
+            }, function(data){
+              var data = JSON.parse(data);
+            $("#textReview").text(data[0]['comment']);
+            $(`input[name='rating'][value=${Math.floor(data[0]['rating'])}]`).trigger("click");
+          });
+        }
+    });
 
     
     $('#modalCloseBtn').click(function(){
         $('#reviewModal').fadeOut();
         $('#reviewForm')[0].reset();
     });
-    /*
-    $('#saveReviewBtn').click(function(e){
-    e.preventDefault();
-      var rating = $('input[name="rating"]:checked').val();
-      var review = $('#textReview').val().trim();
-
-      if (!rating || review === '') {
-        alert('Please select a rating and write a review.');
-        return;
-      }
-
-      alert(`Thanks for your review!\n\nRating: ${rating} star(s)\nReview: ${review}`);
-      $('#reviewModal').fadeOut();
-      $('#reviewForm')[0].reset();
-    });
-    */
-
-  });
+});
