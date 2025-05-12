@@ -8,11 +8,11 @@ $model = new Export();
 $results = $model->getSentimentData();
 
 $output = fopen('php://output', 'w');
-fputcsv($output, ['Movie', 'Review', 'Sentiment', 'User', 'Date']);
+fputcsv($output, ['Review ID', 'Movie Name', 'User Name', 'Rating', 'Score', 'Sentiment', 'Created At']);
 
 while ($row = $results->fetch_assoc()) {
     fputcsv($output, $row);
 }
 
 fclose($output);
-exit;
+exit;   
