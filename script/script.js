@@ -1,6 +1,6 @@
 $(document).ready(function () {
     checkSuper();
-    mainloadTables()
+    mainloadTables();
     $("#login_form").submit(function (e) {
         e.preventDefault();
         var email = $("#login_email").val();
@@ -90,17 +90,46 @@ $(document).ready(function () {
     //     $("#userForm")[0].reset();
     // });
 
-    function checkSuper() {
-        if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
-            $("#adminOpt").remove();
+    $("#saveReviewBtn").click(function(){
+        alert($("input[name='rating']:checked").val());
+        alert($("#movie_id").val());
+        alert($("#user_id").val());
+    });
+
+    $('#saveReviewBtn').click(function(e){
+        e.preventDefault();
+        var rating = $('input[name="rating"]:checked').val();
+        var review = $('#textReview').val().trim();
+    
+        if (!rating || review === '') {
+            alert('Please select a rating and write a review.');
+            return;
         }
-    }
+        $.ajax({
+            url: "/NumberCircled/app/controller/review_process.php",
+            method: "POST",
+            data: {
+                rating: $("input[name='rating']:checked").val(),
+                movie_id: $("#movie_id").val(),
+                user_id: $("#user_id").val()
+            },
+            success: function(data){
+                alert("wow");
+            },
+            error: function () {
+                alert('Failed to update movie review data.');
+            }
+        });
+    
+        alert(`Thanks for your review!\n\nRating: ${rating} star(s)\nReview: ${review}`);
+        $('#reviewModal').fadeOut();
+        $('#reviewForm')[0].reset();
+    });
 
     $(document).on('click', '#editSemanticsBtn', function (e) {
         e.preventDefault();
         $('#semanticModal').modal('show'); // or use Bootstrap.Modal version
     });
-
 
 
     $('#semanticForm').on('submit', function (e) {
@@ -114,28 +143,69 @@ $(document).ready(function () {
         });
     });
 
+    function checkSuper() {
+        if ($.inArray($("#role_id").val(), ["2", "3"]) != -1) {
+            $("#adminOpt").remove();
+        }
+    }
 
+    
+    //Review
+    $.ajax({
+        url: "/NumberCircled/app/controller/fetch/review_fetch.php",
+        method: "GET",
+        data: {movie: $("#movie_id").attr('value')},
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+            $.each(data.movie['0'], function(key, value) {
+                if(key == "release_date"){
+                    $("[name='release_date']").text(value.split("-")[0])
+                } else if(key == "image_url"){
+                    $("[name='image_url']").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+                } else {
+                    $(`[name='${key}']`).text(value);
+                }
+            });
+
+            $.each(data.review_detail['0'], function(key, value) {
+                $(`[name='${key}']`).text(value);
+
+            });
+
+            var genres = "";
+            for(var num in data.genre){
+                genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
+            }
+            $(".genre-list").append(genres);
+
+
+        },
+        error: function () {
+            alert('Failed to fetch movie review data.');
+        }
+    });
+    
     function mainloadTables() {
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);
         });
-
-
+      
         $('#userMenu').on('show.bs.collapse', function () {
-            $(this).prev().find('.toggle-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-            console.log("sad")
-        });
-        $('#userMenu').on('hide.bs.collapse', function () {
-            $(this).prev().find('.toggle-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-        });
+              $(this).prev().find('.toggle-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+              console.log("sad")
+          });
+          $('#userMenu').on('hide.bs.collapse', function () {
+              $(this).prev().find('.toggle-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+          });
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var collapseElements = document.querySelectorAll('.collapse');
-            collapseElements.forEach(function (element) {
-                var bsCollapse = new bootstrap.Collapse(element, {
-                    toggle: false // Optional: start with it collapsed
-                });
-            });
-        });
+          document.addEventListener('DOMContentLoaded', function () {
+              var collapseElements = document.querySelectorAll('.collapse');
+              collapseElements.forEach(function (element) {
+                  var bsCollapse = new bootstrap.Collapse(element, {
+                      toggle: false // Optional: start with it collapsed
+                  });
+              });
+          });
     }
 })

@@ -77,3 +77,82 @@ Admin
         <button class="btn-chevron-next">
           <i class="fas fa-chevron-right fa-2x"></i>
           </button>
+
+
+
+
+
+--------------MOVIE REVIEW
+Left side
+<div class="movie-card">
+                    <div class="img-fluid w-100 movie-card-poster"></div>
+                    <div class="title-overlay">
+                        <h2 class="mb-1">Spider-man: Into the Spider Verse</h2>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-danger rounded-1 me-2 d-flex align-items-center px-3">
+                                <i class="fas fa-play me-2"></i> Play Now
+                            </button>
+                            <button class="btn btn-dark rounded-circle me-2" style="width: 38px; height: 38px;">
+                                <i class="fas fa-plus text-white"></i>
+                            </button>
+                            <button class="btn btn-dark rounded-circle me-2" style="width: 38px; height: 38px;">
+                                <i class="fas fa-thumbs-up text-white"></i>
+                            </button>
+                            <button class="btn btn-dark rounded-circle" style="width: 38px; height: 38px;">
+                                <i class="fas fa-volume-mute text-white"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+Right side
+<!-- Description Card -->
+                <div class="info-card mb-3">
+                    <h6 class="section-title">Description</h6>
+                    <p class="section-content mb-0">
+                        After reuniting with Gwen Stacy, Brooklyn's full-time, friendly
+                        neighborhood Spider-Man is catapulted across the Multiverse,
+                        where he encounters a team of Spider-People charged with
+                        protecting its very existence. However, when the heroes clash on
+                        how to handle a new threat, Miles finds himself pitted against the
+                        other Spiders. He must soon redefine what it means to be a hero
+                        so he can save the people he loves most.
+                    </p>
+                </div>
+
+                <!-- Additional Info Card -->
+                <div class="info-card">
+                    <!-- Released Year Section -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="far fa-calendar-alt text-secondary me-2"></i>
+                            <h6 class="section-title m-0">Released Year</h6>
+                        </div>
+                        <p class="section-content mb-0">2022</p>
+                    </div>
+
+                    <!-- Ratings Section -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="far fa-star text-secondary me-2"></i>
+                            <h6 class="section-title m-0">Ratings</h6>
+                        </div>
+                        <div class="d-flex">
+                            <p class="section-content mb-0"><i class="fas fa-thumbs-up me-2"></i>Mostly Positive</p>
+                        </div>
+                    </div>
+
+                    <!-- Genres Section -->
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-film text-secondary me-2"></i>
+                            <h6 class="section-title m-0">Genres</h6>
+                        </div>
+                        <div>
+                            <span class="genre-pill">Action</span>
+                            <span class="genre-pill">Adventure</span>
+                        </div>
+                    </div>
+                </div>
+
+
