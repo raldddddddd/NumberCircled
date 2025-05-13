@@ -156,7 +156,7 @@ $(document).ready(function () {
         $.ajax({
         url: "/NumberCircled/app/controller/fetch/review_fetch.php",
         method: "GET",
-        data: {movie: $("#movie_id").attr('value')},
+        data: {movie: $("#movie_id").val()},
         dataType: "json",
         success: function(data){
             if(window.location.pathname === '/NumberCircled/app/view/movie_review/movie_review_page.php'){
