@@ -38,7 +38,7 @@
 
             <!-- Right: Logout + Menu icon -->
             <div class="d-flex align-items-center">
-                <span class="text-white me-3">Log out</span>
+                <a class="genre-pill" href="../login.php" id="go-back">Logout</a>
                 <label for="profile-btn">
         <img src="/NumberCircled/assets/def-profile.png" alt="Logo" width="40" height="40" class="me-2" />
         </label>
@@ -148,8 +148,20 @@
                         <i class="fas fa-plus me-2"></i><span id="reviewBtn">Add Your Review</span>
                     </button>
                 </div>
-                <div class="row g-4 review-loader">
-                    <!-- Review Card (Example) -->
+                <div class="review-container">
+                    <div class="review-loader" id="reviewLoader">
+                        <!-- Review Card (Example) -->
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class='d-flex justify-content-center align-items-center gap-3 mt-4'>
+                    <button class='btn btn-dark rounded-circle' id="prevBtn">
+                        <i class='fas fa-chevron-left'></i>
+                    </button>
+                    <button class='btn btn-dark rounded-circle' id="nextBtn">
+                        <i class='fas fa-chevron-right'></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

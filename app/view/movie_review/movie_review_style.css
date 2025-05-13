@@ -20,27 +20,6 @@ body {
     z-index: 10; /* Ensures it’s above the hero image */
 }
 
-.search-container {
-    position: relative;
-    width: 50%;
-}
-
-.search-input {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 20px;
-    color: white;
-    padding: 8px 15px;
-    width: 100%;
-}
-
-.search-icon {
-    position: absolute;
-    right: 15px;
-    top: 9px;
-    color: #888;
-}
-
 .hero-section {
     height: 70vh;
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('https://external-preview.redd.it/CLHUeUoH-ZRhRzLR5fVCewftQmQrfFD7dAYf8__6hTY.jpg?width=640&crop=smart&auto=webp&s=ed20408e6892edca60cbe4446536228e83398b1a') no-repeat center;
@@ -117,6 +96,11 @@ body {
     display: inline-block;
 }
 
+.genre-pill:hover{
+  background-color: #b91c1c;
+  border: 1px solid #b91c1c;
+}
+
 .control-buttons {
     padding: 0 20px;
 }
@@ -146,20 +130,12 @@ padding-right: 15px;
 
 
 .custom-footer {
-    background-color: #14181c;
-    color: #e0e0e0;
+  background-color: #14181c;
+  color: #e0e0e0;
+  font-weight: 500;
+  font-size: 14px;  
 }
-  
-.custom-footer .footer-link {
-    color: #e0e0e0;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-}
-  
-.custom-footer .footer-link:hover {
-    text-decoration: underline;
-}
+
 
 
 
@@ -293,4 +269,20 @@ padding-right: 15px;
   
   #go-back{
     text-decoration: none;
+  }
+
+  .review-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .review-loader{
+    overflow-x: auto;
+      scroll-behavior: smooth;
+      display: flex;
+      gap: 10px;
+      width: 700px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
   }
