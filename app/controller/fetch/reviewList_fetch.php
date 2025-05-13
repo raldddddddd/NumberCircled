@@ -31,7 +31,7 @@ while ($row = $data->fetch_assoc()) {
                             <p class='mb-0 review-comment'>{$row['comment']}</p>
                         </div>
                     </div>";
-}       
+}  
 echo $output;
 ?>
 

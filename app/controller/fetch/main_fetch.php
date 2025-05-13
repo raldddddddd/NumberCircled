@@ -49,6 +49,5 @@ while ($row = $result->fetch_assoc()) {
         <div class='d-flex justify-content-center gap-2 mt-2 flex-wrap'>{$genres}</div>
     </div>";
 }
-
 echo $output;
 ?>

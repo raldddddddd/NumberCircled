@@ -25,7 +25,7 @@ $(document).ready(function(){
     });
 
     const wrapper = $('#reviewLoader');
-    const cardWidth = 210; // card width + gap
+    const cardWidth = 243; // card width + gap
     const scrollStep = cardWidth * 3;
 
     $('#nextBtn').click(function () {

@@ -18,13 +18,11 @@
     }
 
     .carousel-track-wrapper {
-      overflow-x: auto;
-      scroll-behavior: smooth;
+      overflow-x: hidden; /* prevent scrollbar */
       display: flex;
       gap: 10px;
       width: 700px;
       margin-bottom: 10px;
-      scrollbar-width: none;
     }
 
     .card {
@@ -64,8 +62,8 @@
     <div class="card">Movie 7</div>
   </div>
   <div class="carousel-buttons">
-    <button id="prevBtn"><i>⟨ Prev</i></button>
-    <button id="nextBtn"><i>Next ⟩</i></button>
+    <button id="prevBtn">⟨ Prev</button>
+    <button id="nextBtn">Next ⟩</button>
   </div>
 </div>
 
@@ -73,18 +71,28 @@
   $(document).ready(function () {
     const $wrapper = $('#carouselWrapper');
     const cardWidth = 210; // card width + gap
-    const scrollStep = cardWidth * 3;
+    const visibleCards = Math.floor($wrapper.width() / cardWidth);
+    const totalCards = $('.card').length;
+    const totalPages = Math.ceil(totalCards / visibleCards);
+    let currentPage = 0;
+
+    function updateScroll() {
+      const newScrollLeft = currentPage * visibleCards * cardWidth;
+      $wrapper.scrollLeft(newScrollLeft);
+    }
 
     $('#nextBtn').click(function () {
-      $wrapper.animate({
-        scrollLeft: $wrapper.scrollLeft() + scrollStep
-      }, 400);
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        updateScroll();
+      }
     });
 
     $('#prevBtn').click(function () {
-      $wrapper.animate({
-        scrollLeft: $wrapper.scrollLeft() - scrollStep
-      }, 400);
+      if (currentPage > 0) {
+        currentPage--;
+        updateScroll();
+      }
     });
   });
 </script>
