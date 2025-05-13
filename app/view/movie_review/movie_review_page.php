@@ -150,6 +150,7 @@
                 </div>
                 <div class="row g-4 review-loader">
                     <!-- Review Card (Example) -->
+                </div>
             </div>
         </div>
     </div>
