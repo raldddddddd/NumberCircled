@@ -117,6 +117,11 @@ body {
     display: inline-block;
 }
 
+.genre-pill:hover{
+  background-color: #b91c1c;
+  border: 1px solid #b91c1c;
+}
+
 .control-buttons {
     padding: 0 20px;
 }
