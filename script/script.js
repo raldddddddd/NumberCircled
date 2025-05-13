@@ -159,56 +159,44 @@ $(document).ready(function () {
         data: {movie: $("#movie_id").attr('value')},
         dataType: "json",
         success: function(data){
-            var genres = "";
-            $.each(data.movie['0'], function(key, value) {
-                if(key == "release_date"){
-                    $("[name='release_date']").text(value.split("-")[0])
-                } else if(key == "image_url"){
-                    $("[name='image_url']").css("background",`url(${value})no-repeat center`);
-                    $(".modal-poster").css("background",`url(${value})no-repeat center`);
-                    $(".hero-section").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
-                } else {
+            if(window.location.pathname === '/NumberCircled/app/view/movie_review/movie_review_page.php'){
+                var genres = "";
+                $.each(data.movie['0'], function(key, value) {
+                    if(key == "release_date"){
+                        $("[name='release_date']").text(value.split("-")[0])
+                    } else if(key == "image_url"){
+                        $("[name='image_url']").css("background",`url(${value})no-repeat center`);
+                        $(".modal-poster").css("background",`url(${value})no-repeat center`);
+                        $(".hero-section").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+                    } else {
+                        $(`[name='${key}']`).text(value);
+                    }
+                });
+
+                $.each(data.review_detail['0'], function(key, value) {
                     $(`[name='${key}']`).text(value);
+
+                });
+
+                for(var num in data.genre){
+                    genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
                 }
-            });
 
-            $.each(data.review_detail['0'], function(key, value) {
-                $(`[name='${key}']`).text(value);
+                
+                if($("#existing_review").val() == 1){
+                    $("#reviewBtn").text("Update Your Review");
+                    $('#deleteReviewBtn').removeAttr('hidden');
+                }
 
-            });
 
-            for(var num in data.genre){
-                genres += `<span class='genre-pill'>${data.genre[num]['genre']}</span>`;
-            }
-
+                $(".genre-list").append(genres);
+                $(".modal-title").text(data.movie['0']['name']);
+                $(".modal-year").text(data.movie['0']['release_date']);
             
-            if($("#existing_review").val() == 1){
-                $("#reviewBtn").text("Update Your Review");
-                $('#deleteReviewBtn').removeAttr('hidden');
             }
-
-
-            $(".genre-list").append(genres);
-            $(".modal-title").text(data.movie['0']['name']);
-            $(".modal-year").text(data.movie['0']['release_date']);
-            
-
         },
         error: function () {
             alert('Failed to fetch movie review data.');
-        }
-    });
-
-    //User Review List
-    $.ajax({
-        url: "/NumberCircled/app/controller/fetch/reviewList_fetch.php",
-        method: "GET",
-        data: {movie: $("#movie_id").attr('value')},
-        success: function(data){
-            $(".review-loader").html(data);
-        },
-        error: function(){
-            alert("Failed to load USER reviews");
         }
     });
 

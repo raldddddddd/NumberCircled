@@ -38,7 +38,7 @@
 
             <!-- Right: Logout + Menu icon -->
             <div class="d-flex align-items-center">
-                <span class="text-white me-3">Log out</span>
+                <a class="genre-pill" href="../login.php" id="go-back">Logout</a>
                 <label for="profile-btn">
         <img src="/NumberCircled/assets/def-profile.png" alt="Logo" width="40" height="40" class="me-2" />
         </label>

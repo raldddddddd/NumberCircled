@@ -11,6 +11,20 @@ body {
 
 
 /* Hero Section */
+#go-back{
+  text-decoration: none;
+}
+
+.logout-pill {
+  background-color: transparent;
+  border: 1px solid #6c757d;
+  color: white;
+  border-radius: 20px;
+  padding: 6px 15px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
 .hero-section {
   background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/b3c40a78219513.5cc812e957de6.jpg') center center / cover no-repeat;
   height: 80vh;
