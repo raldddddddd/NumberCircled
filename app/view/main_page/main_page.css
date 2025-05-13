@@ -106,13 +106,13 @@ body {
 
 
 /* Movie Posters */
-.movie-card {
+/*.movie-card {
   width: 100%;
   padding-left: -50px;
   padding-right: -50px;
   max-width: 260px;
   margin: auto;
-}
+}*/
 
 .movie-poster {
   width: 100%;
