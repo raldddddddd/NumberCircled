@@ -80,24 +80,24 @@ class Dashboard
         return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Sentiment trend over time (grouped daily)
     public function getSentimentTrend($movieId)
     {
-        $sql = "SELECT 
-                    movie_id,
-                    DATE(created_at) AS date,
-                    SUM(CASE WHEN score > 0.05 THEN 1 ELSE 0 END) AS positive,
-                    SUM(CASE WHEN score = 0.05 THEN 1 ELSE 0 END) AS neutral,
-                    SUM(CASE WHEN score < 0.05 THEN 1 ELSE 0 END) AS negative
-                FROM reviews
-                GROUP BY movie_id, DATE(created_at)
-                ORDER BY date
-                ";
-
-        $stmt = $this->conn->prepare($sql);
+        global $conn;
+        $stmt = $conn->prepare("
+        SELECT 
+            DATE(created_at) AS date,
+            SUM(CASE WHEN score > 0.5 THEN 1 ELSE 0 END) AS positive,
+            SUM(CASE WHEN score = 0.5 THEN 1 ELSE 0 END) AS neutral,
+            SUM(CASE WHEN score < 0.5 THEN 1 ELSE 0 END) AS negative
+        FROM reviews
+        WHERE movie_id = ?
+        GROUP BY DATE(created_at)
+        ORDER BY date ASC
+    ");
         $stmt->bind_param("i", $movieId);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getRecentActivities()
