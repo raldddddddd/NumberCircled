@@ -121,11 +121,11 @@ $(document).ready(function () {
 
   function loadMovies() {
     $.ajax({
-      url: '/NumberCircled/app/controller/fetch/main_fetch.php', // path to your PHP file
+      url: '/NumberCircled/app/controller/fetch/main_fetch.php', 
       type: 'GET',
       success: function (response) {
-        $('#movie-carousel').html(response); // insert PHP output into container
-        setupCarousel(); // initialize carousel behavior
+        $('#movie-carousel').html(response); 
+        setupCarousel(); 
       },
       error: function (xhr, status, error) {
         console.error('Failed to load movies:', error);
