@@ -52,6 +52,7 @@ $profile_image = $_SESSION['profile_image'];
                                         <th>Profile Image</th>
                                         <th>Created At</th>
                                         <th>Last Edited At</th>
+                                        <th>Last Logged In</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

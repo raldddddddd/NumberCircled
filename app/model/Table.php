@@ -44,9 +44,15 @@ class Table
                 u.email,
                 u.profile_image,
                 u.created_at,
-                u.last_edited_at
-            FROM users as u
-            INNER JOIN roles as r ON u.role_id = r.id;
+                u.last_edited_at,
+                al.last_login
+            FROM users AS u
+            INNER JOIN roles AS r ON u.role_id = r.id
+            LEFT JOIN (
+                SELECT user_id, MAX(login_time) AS last_login
+                FROM activity_logs
+                GROUP BY user_id
+            ) AS al ON u.id = al.user_id
         ";
         return $conn->query($query);
     }
