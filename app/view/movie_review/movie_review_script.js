@@ -23,4 +23,20 @@ $(document).ready(function(){
         $('#reviewModal').fadeOut();
         $('#reviewForm')[0].reset();
     });
+
+    const wrapper = $('#reviewLoader');
+    const cardWidth = 243; // card width + gap
+    const scrollStep = cardWidth * 3;
+
+    $('#nextBtn').click(function () {
+      wrapper.animate({
+        scrollLeft: wrapper.scrollLeft() + scrollStep
+      }, 400);
+    });
+
+    $('#prevBtn').click(function () {
+      wrapper.animate({
+        scrollLeft: wrapper.scrollLeft() - scrollStep
+      }, 400);
+    });
 });

@@ -165,9 +165,9 @@ $(document).ready(function () {
                     if(key == "release_date"){
                         $("[name='release_date']").text(value.split("-")[0])
                     } else if(key == "image_url"){
-                        $("[name='image_url']").css("background",`url(${value})no-repeat center`);
-                        $(".modal-poster").css("background",`url(${value})no-repeat center`);
-                        $(".hero-section").css("background",`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url(${value})no-repeat center`);
+                        $("[name='image_url']").css("background-image",`url(${value})`);
+                        $(".modal-poster").css("background-image",`url(${value})`);
+                        $(".hero-section").css("background-image",`url(${value})`);
                     } else {
                         $(`[name='${key}']`).text(value);
                     }
@@ -213,7 +213,7 @@ $(document).ready(function () {
         }
     });
 
-
+        
         $.get("/NumberCircled/app/controller/fetch/main_fetch.php", function (data) {
             $(".featured-movies").html(data);
         });

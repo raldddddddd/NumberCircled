@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Review Slider</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .carousel-container {
+      width: 90%;
+      margin: 40px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .carousel-track-wrapper {
+      overflow-x: hidden; /* prevent scrollbar */
+      display: flex;
+      gap: 10px;
+      width: 700px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      min-width: 200px;
+      height: 150px;
+      background: #f3f3f3;
+      border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .carousel-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .carousel-buttons button {
+      font-size: 18px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel-container">
+  <div class="carousel-track-wrapper" id="carouselWrapper">
+    <div class="card">Movie 1</div>
+    <div class="card">Movie 2</div>
+    <div class="card">Movie 3</div>
+    <div class="card">Movie 4</div>
+    <div class="card">Movie 5</div>
+    <div class="card">Movie 6</div>
+    <div class="card">Movie 7</div>
+  </div>
+  <div class="carousel-buttons">
+    <button id="prevBtn">⟨ Prev</button>
+    <button id="nextBtn">Next ⟩</button>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const $wrapper = $('#carouselWrapper');
+    const cardWidth = 210; // card width + gap
+    const visibleCards = Math.floor($wrapper.width() / cardWidth);
+    const totalCards = $('.card').length;
+    const totalPages = Math.ceil(totalCards / visibleCards);
+    let currentPage = 0;
+
+    function updateScroll() {
+      const newScrollLeft = currentPage * visibleCards * cardWidth;
+      $wrapper.scrollLeft(newScrollLeft);
+    }
+
+    $('#nextBtn').click(function () {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        updateScroll();
+      }
+    });
+
+    $('#prevBtn').click(function () {
+      if (currentPage > 0) {
+        currentPage--;
+        updateScroll();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

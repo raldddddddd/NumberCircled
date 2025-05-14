@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Grid with Pagination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .movie-card {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+
+        .pagination {
+            text-align: center;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            margin: 0 3px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .pagination button.active,
+        .pagination button:hover {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid" id="movieGrid"></div>
+<div class="pagination" id="pagination"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const movies = [
+        { title: "Movie 1", year: 2021 },
+        { title: "Movie 2", year: 2022 },
+        { title: "Movie 3", year: 2023 },
+        { title: "Movie 4", year: 2020 },
+        { title: "Movie 5", year: 2019 },
+        { title: "Movie 6", year: 2021 },
+        { title: "Movie 7", year: 2018 },
+        { title: "Movie 8", year: 2022 },
+        { title: "Movie 9", year: 2023 },
+        { title: "Movie 10", year: 2017 },
+        { title: "Movie 11", year: 2016 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 },
+        { title: "Movie 12", year: 2015 }
+
+    ];
+
+    const itemsPerPage = 9;
+    let currentPage = 1;
+
+    function renderMovies(page) {
+        $('#movieGrid').empty();
+        let start = (page - 1) * itemsPerPage;
+        let end = start + itemsPerPage;
+        let paginatedItems = movies.slice(start, end);
+
+        paginatedItems.forEach(movie => {
+            $('#movieGrid').append(`
+                <div class="movie-card">
+                    <h3>${movie.title}</h3>
+                    <p>${movie.year}</p>
+                </div>
+            `);
+        });
+    }
+
+    function renderPagination() {
+        $('#pagination').empty();
+        let totalPages = Math.ceil(movies.length / itemsPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+            $('#pagination').append(`
+                <button class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>
+            `);
+        }
+    }
+
+    $(document).ready(function () {
+        renderMovies(currentPage);
+        renderPagination();
+
+        $('#pagination').on('click', 'button', function () {
+            currentPage = parseInt($(this).attr('data-page'));
+            renderMovies(currentPage);
+            renderPagination();
+        });
+    });
+</script>
+
+</body>
+</html>

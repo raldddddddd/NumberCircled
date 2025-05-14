@@ -31,17 +31,7 @@ while ($row = $data->fetch_assoc()) {
                             <p class='mb-0 review-comment'>{$row['comment']}</p>
                         </div>
                     </div>";
-}
-$output .= "                <!-- Pagination -->
-                <div class='d-flex justify-content-center align-items-center gap-3 mt-4'>
-                    <button class='btn btn-dark rounded-circle'>
-                        <i class='fas fa-chevron-left'></i>
-                    </button>
-                    <button class='btn btn-dark rounded-circle'>
-                        <i class='fas fa-chevron-right'></i>
-                    </button>
-                </div>";
-
+}  
 echo $output;
 ?>
 
